@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  nestjs:
+    image: node:19.0.0-alpine
+    working_dir: /app 
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./backend:/app
+    container_name: nestjs
+    ports:
+      - 8000:3000
+    depends_on:
+      - db
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@db:5432/db
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  react:
+    image: node:19.0.0-alpine
+    working_dir: /app
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./front:/app
+    container_name: react
+    ports:
+      - 3000:3000
+    depends_on:
+      - nestjs
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8000
+  db:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root 
+      - POSTGRES_DB=db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
