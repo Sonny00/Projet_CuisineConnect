@@ -27,8 +27,8 @@ import { LoggedInUser } from 'src/loggedin-user.decorator';
 import { UpdatePasswordDto } from './userDto/update-password.dto';
 
 @Controller('users')
-@UseInterceptors(UsersInterceptor)
-@UseGuards(AuthGuard('jwt'), RolesGuard)
+//@UseInterceptors(UsersInterceptor)
+//@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -58,7 +58,7 @@ export class UsersController {
   }
 
   @Post()
-  @Roles(UserRole.ADMIN)
+  //@Roles(UserRole.ADMIN)
   async createUser(@Body(ValidationPipe) user: CreateUserDto): Promise<User> {
     return await this.userService.create(user);
   }
