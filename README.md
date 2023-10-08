@@ -1,11 +1,9 @@
-# Groupe 17
-
 ## Fonctionnalités
 LUSCAP Sonny, GACEM Torkia Hala
 
 Classe 5IWJ
 
-Lien GitHub : https://github.com/Sonny00/Challenge-stack-semestriel-2
+Lien GitHub : https://github.com/Sonny00/Projet_CuisineConnect
 
 ```bash
 make start # pour lancer le projet
