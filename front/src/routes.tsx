@@ -27,6 +27,8 @@ const DashboardSaaS = Loadable(lazy(() => import("./pages/dashboards/SaaS")));
 // user profile
 const UserProfile = Loadable(lazy(() => import("./pages/UserProfile")));
 
+const Favoris = Loadable(lazy(() => import("./pages/Favoris")));
+
 const Error = Loadable(lazy(() => import("./pages/404")));
 
 // routes
@@ -65,7 +67,12 @@ const routes = [
         path: "user-profile",
         element: <UserProfile />,
       },
-     
+
+      {
+        path: "favoris",
+        element: <Favoris />,
+      },
+    
     ],
   },
   {

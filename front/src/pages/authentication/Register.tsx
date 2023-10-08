@@ -87,7 +87,9 @@ const Register: FC = () => {
             setLoading(false);
             toast.success("Félicitation vous êtes inscrit !");
             navigate("/dashboard");
-          } else {
+          } else if (response.status === 409) {
+      setError('Email déjà utilisé. Veuillez utiliser un autre email.');
+    } else {
             setError("Erreur lors de l'inscription");
         setLoading(false);
           } 

@@ -62,16 +62,16 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
             <ToggleIcon />
           </Box>
 
-          <Box flexGrow={1} textAlign="center">
+          {/* <Box flexGrow={1} textAlign="center">
             <img
               src="/static/logo/logo.svg"
               width="100%"
               height="30"
               alt="Logo"
             />
-          </Box>
+          </Box> */}
 
-          <LanguagePopover />
+        
           <ProfilePopover />
         </StyledToolBar>
       </DashboardNavbarRoot>

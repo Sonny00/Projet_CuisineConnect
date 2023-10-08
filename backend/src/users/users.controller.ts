@@ -25,6 +25,8 @@ import { UserRole } from './userRole.enum';
 import { UpdateUserDto } from './userDto/update-users.dto';
 import { LoggedInUser } from 'src/loggedin-user.decorator';
 import { UpdatePasswordDto } from './userDto/update-password.dto';
+import { BadRequestException } from '@nestjs/common';
+
 
 @Controller('users')
 //@UseInterceptors(UsersInterceptor)
@@ -60,6 +62,13 @@ export class UsersController {
   @Post()
   //@Roles(UserRole.ADMIN)
   async createUser(@Body(ValidationPipe) user: CreateUserDto): Promise<User> {
+    const existingUser = await this.userService.findOneByEmail(user.email);
+
+    if (existingUser) {
+      throw new BadRequestException(
+        'Cet email est déjà utilisé. Veuillez en choisir un autre.',
+      );
+    }
     return await this.userService.create(user);
   }
 
