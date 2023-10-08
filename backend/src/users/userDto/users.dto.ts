@@ -10,10 +10,6 @@ export class CreateUserDto {
   @IsDefined()
   lastname: string;
 
-  @IsNotEmpty()
-  @IsDefined()
-  jobTitle: string;
-
   @IsEmail()
   @IsNotEmpty()
   @IsDefined()
@@ -22,7 +18,4 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsDefined()
   password: string;
-
-  @ArrayNotEmpty()
-  skills: string[]
 }
