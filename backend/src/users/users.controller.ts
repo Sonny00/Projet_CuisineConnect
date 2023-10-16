@@ -27,10 +27,9 @@ import { LoggedInUser } from 'src/loggedin-user.decorator';
 import { UpdatePasswordDto } from './userDto/update-password.dto';
 import { BadRequestException } from '@nestjs/common';
 
-
 @Controller('users')
-//@UseInterceptors(UsersInterceptor)
-//@UseGuards(AuthGuard('jwt'), RolesGuard)
+@UseInterceptors(UsersInterceptor)
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -99,5 +98,4 @@ export class UsersController {
     await this.userService.deleteUser(id);
     return 'deleted';
   }
-
 }

@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient, User, Recette } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
@@ -60,6 +60,32 @@ async function insertUsers() {
   // eslint-disable-next-line no-console
   console.log('users inserted');
 }
+async function insertRecettes() {
+  const recette1 = await prisma.recette.create({
+    data: {
+      title: 'Recette 1',
+      description: 'Description de la recette 1',
+      // Ajoutez d'autres propriétés de la recette si nécessaire
+    },
+  });
+
+  const recette2 = await prisma.recette.create({
+    data: {
+      title: 'Recette 2',
+      description: 'Description de la recette 2',
+    },
+  });
+
+  const recette3 = await prisma.recette.create({
+    data: {
+      title: 'Recette 3',
+      description: 'Description de la recette 3',
+      // Ajoutez d'autres propriétés de la recette si nécessaire
+    },
+  });
+
+  return [recette1, recette2, recette3];
+}
 
 async function resetDB() {
   await prisma.user.deleteMany({});
@@ -72,6 +98,7 @@ async function main() {
   await resetDB();
   await insertAdmin();
   const users = await insertUsers();
+  const recettes = await insertRecettes();
 }
 
 main()

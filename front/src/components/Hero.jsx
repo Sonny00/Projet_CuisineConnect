@@ -59,7 +59,7 @@ const Hero = () => {
             </svg>
           </button>
         </form>
-        {loading && <LoadingScreen />} {/* Affiche l'écran de chargement si loading est vrai */}
+        {loading && <LoadingScreen />} 
         {searchResult && (
           <div className='text-white mt-4'>{searchResult.data}</div>
         )}

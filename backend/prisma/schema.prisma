@@ -25,6 +25,12 @@ model Favoris {
   text String
 }
 
+model Recette {
+  id          String @id @default(uuid())
+  title       String
+  description String
+}
+
 enum Role {
   ADMIN
   USER
