@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import PopoverLayout from "./PopoverLayout";
 import Icons from "../../../icons/sidebar";
 
+
+
 // styled components
 const StyledSmall = styled(Small)(({ theme }) => ({
   display: "block",
@@ -33,6 +35,9 @@ const ProfilePopover: FC = () => {
     navigate(path);
     setOpen(false);
   };
+
+  console.log("Contenu de user :", user);
+
 
   return (
     <Fragment>
@@ -76,7 +81,13 @@ const ProfilePopover: FC = () => {
             <Icons.UserProfileIcon sx={{ width: 35, height: 35, color: "#282B2A" }} />
 
             <Box ml={1}>
-              <H6>{user?.lastname?.toUpperCase() + " " + user?.firstname}</H6>
+              {user && (
+  <H6>
+    {user.lastname?.toUpperCase() + " " + user.firstname}
+  </H6>
+)}
+
+
               <Tiny display="block" fontWeight={500} color="text.disabled">
                 {user?.email}
               </Tiny>

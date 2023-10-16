@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import useApi from '../hooks/useApi';
+import LoadingScreen from './LoadingScreen'; // Importez votre composant d'écran de chargement
 
 const Hero = () => {
   const { getRecetteSearchAnswer } = useApi();
 
   const [inputData, setInputData] = useState('');
   const [searchResult, setSearchResult] = useState('');
+  const [loading, setLoading] = useState(false); // État pour gérer l'écran de chargement
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true); 
+
       const response = await getRecetteSearchAnswer({ message: inputData });
 
-    
       setSearchResult(response);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -25,9 +30,9 @@ const Hero = () => {
       <div className='absolute top-0 left-0 w-full h-full bg-gray-900/30'></div>
       <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center text-center'>
         <h1 className='text-white mb-2'>Bienvenue sur CuisineConnect</h1>
-        <h2 className='text-white mb-4'>Quelle recette souhaitez-vous aujourd'hui ? </h2>
+        <h2 className='text-white mb-4'>Quelle recette souhaitez-vous aujourd'hui ?</h2>
         <form
-          onSubmit={handleSearch} 
+          onSubmit={handleSearch}
           className='flex border p-1 rounded-md text-black bg-gray-100/90 max-w-[700px] w-[80%] mx-auto'
         >
           <input
@@ -54,6 +59,7 @@ const Hero = () => {
             </svg>
           </button>
         </form>
+        {loading && <LoadingScreen />} {/* Affiche l'écran de chargement si loading est vrai */}
         {searchResult && (
           <div className='text-white mt-4'>{searchResult.data}</div>
         )}
