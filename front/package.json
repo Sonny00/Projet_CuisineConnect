@@ -35,7 +35,9 @@
     "react-table": "^7.7.0",
     "simplebar-react": "^2.3.5",
     "stylis": "^4.0.10",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "styled-components": "^5.3.6",
+"framer-motion": "^9.0.4"
   },
   "scripts": {
     "start": "vite",

@@ -10,7 +10,7 @@ down:
 start:
 	docker-compose up -d
 	docker-compose exec nestjs npm install
-	docker-compose exec react npm install
+	docker-compose exec react npm install -f
 	docker-compose exec -it nestjs npx prisma generate
 	docker-compose exec -t nestjs npx prisma db push
 	docker-compose exec -it nestjs npx prisma db seed

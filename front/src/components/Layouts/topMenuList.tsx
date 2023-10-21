@@ -7,7 +7,7 @@ const index = (role: string) => {
      {
       title: "Favoris",
       Icon: Icons.TrainingIcon,
-      path: "/dashboard/favoris",
+      path: "/favoris",
     },
  
   ]

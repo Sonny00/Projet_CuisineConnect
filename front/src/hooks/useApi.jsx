@@ -93,10 +93,23 @@ export default function useApi() {
     return apiClient.delete(`users/${id}`, token);
   }
 
+  
   function getRecetteSearchAnswer(data) {
-    return apiClient.post("recette-search", data, token);
+    return apiClient.post('recettes', data, token);
   }
  
+   function getRecettes() {
+    return apiClient.get('recettes', token);
+  }
+
+  function getRecette(id) {
+    return apiClient.get(`recettes/${id}`, token);
+  }
+
+
+function getRecetteByTitle(title) {
+  return apiClient.get(`recettes/title/${title}`, token);
+}
  
   return {
     login,
@@ -108,6 +121,9 @@ export default function useApi() {
     updateUser,
     updatePassword,
     deleteUser,
-    getRecetteSearchAnswer
+    getRecetteSearchAnswer,
+    getRecettes,
+    getRecette,
+    getRecetteByTitle
   };
 }

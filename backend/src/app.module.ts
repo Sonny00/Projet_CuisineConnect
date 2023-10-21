@@ -7,12 +7,25 @@ import { JwtService } from './jwt/jwt.service';
 import { PrismaService } from './prisma.service';
 import { UsersModule } from './users/users.module';
 import { RecetteSearchModule } from './recette-search/recette-search.module';
-import { RecetteService } from './recette/recette.service';
+import { RecettesService } from './recette/recette.service';
+import { RecettesModule } from './recette/recette.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, JwtModule, RecetteSearchModule],
+  imports: [
+    UsersModule,
+    AuthModule,
+    JwtModule,
+    RecetteSearchModule,
+    RecettesModule,
+  ],
   // controllers: [AppController, AuthController],
-  providers: [PrismaClient, JwtService, PrismaService, AuthService, RecetteService],
+  providers: [
+    PrismaClient,
+    JwtService,
+    PrismaService,
+    AuthService,
+    RecettesService,
+  ],
   controllers: [],
 })
 export class AppModule {}

@@ -2,7 +2,7 @@ import { Box, CircularProgress } from "@mui/material";
 import NProgress from "nprogress";
 import { useEffect } from "react";
 
-const LoadingScreen = () => {
+const LoadingScreen: React.FC = () => {
   NProgress.configure({
     showSpinner: false,
     // easing: "ease",

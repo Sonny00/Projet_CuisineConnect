@@ -17,11 +17,6 @@ const Login = Loadable(lazy(() => import("./pages/authentication/Login")));
 const Register = Loadable(
   lazy(() => import("./pages/authentication/Register"))
 );
-const ForgetPassword = Loadable(
-  lazy(() => import("./pages/authentication/ForgetPassword"))
-);
-
-// Dashboard pages
 const DashboardSaaS = Loadable(lazy(() => import("./pages/dashboards/SaaS")));
 
 // user profile
@@ -29,14 +24,18 @@ const UserProfile = Loadable(lazy(() => import("./pages/UserProfile")));
 
 const Favoris = Loadable(lazy(() => import("./pages/Favoris")));
 
+const RecetteDetailPage = Loadable(lazy(() => import("./pages/RecetteDetailPage")));
+
 const Error = Loadable(lazy(() => import("./pages/404")));
+
 
 // routes
 const routes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />,
+    element: <Navigate to="/dashboard" />,
   },
+
   {
     path: "login",
     element: (
@@ -44,7 +43,6 @@ const routes = [
         <Login />
       </GuestGuard>
     ),
-    
   },
 
    {
@@ -58,23 +56,44 @@ const routes = [
         <DashboardLayout />
       </AuthGuard>
     ),
+
     children: [
-      {
-        path: "",
-        element: <DashboardSaaS />,
-      },
+      
+    
       {
         path: "user-profile",
         element: <UserProfile />,
-      },
-
-      {
-        path: "favoris",
-        element: <Favoris />,
-      },
-    
+      },      
+     
     ],
   },
+
+   {
+     path: "favoris",
+     element : (
+     <AuthGuard>
+     <Favoris />,
+          </AuthGuard>
+     ),
+  },
+
+    {
+      path: "recette/:title", // Utilisez un paramètre dynamique ":id" pour l'ID de la recette
+      element: (
+        <AuthGuard>
+          <RecetteDetailPage />,
+        </AuthGuard>
+      ),
+    },
+      
+  {
+     path: "recette-detail",
+     element : (
+     <AuthGuard>
+     <RecetteDetailPage />,
+          </AuthGuard>
+     ),
+      },
   {
     path: "*",
     element: <Error />,

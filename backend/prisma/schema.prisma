@@ -26,9 +26,11 @@ model Favoris {
 }
 
 model Recette {
-  id          String @id @default(uuid())
-  title       String
-  description String
+  id           String  @id @default(uuid())
+  title        String
+  description  String
+  instructions String?
+  ingredients  String?
 }
 
 enum Role {

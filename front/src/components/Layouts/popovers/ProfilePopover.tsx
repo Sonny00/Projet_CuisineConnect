@@ -35,10 +35,7 @@ const ProfilePopover: FC = () => {
     navigate(path);
     setOpen(false);
   };
-
-  console.log("Contenu de user :", user);
-
-
+  
   return (
     <Fragment>
       <ButtonBase disableRipple ref={anchorRef} onClick={() => setOpen(true)}>

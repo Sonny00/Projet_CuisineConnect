@@ -22,7 +22,7 @@ export class RecettesService {
     });
 
     if (!recette) {
-      throw new NotFoundException('Recette not found');
+      throw new NotFoundException('Recette introuvable');
     }
 
     return recette;
@@ -32,6 +32,19 @@ export class RecettesService {
     const recettes = await this.prisma.recette.findMany();
 
     return recettes;
+  }
+  async findOneByTitle(title: string): Promise<Recette | null> {
+    const recette = await this.prisma.recette.findFirst({
+      where: {
+        title: {
+          contains: title,
+        },
+      },
+    });
+    if (!recette) {
+      throw new NotFoundException('Recette introuvable');
+    }
+    return recette;
   }
 
   async update(

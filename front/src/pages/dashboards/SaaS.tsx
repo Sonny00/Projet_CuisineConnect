@@ -44,7 +44,7 @@ const SaaS: FC = () => {
     ];
 
     if (user?.role === ROLES.admin) {
-        return <Navigate to="user-list" />;
+        return <Navigate to="" />;
     }
 
     return <Navigate to="training-list" />;

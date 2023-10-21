@@ -33,8 +33,9 @@ const DashboardLayout: FC = ({ children }) => {
         <DashboardNavbar
           setShowMobileSideBar={() => setShowMobileSideBar((state) => !state)}
         />
-        <Hero />
       </Wrapper>
+      {children || <Outlet /> }
+      <Hero />
     </Fragment>
   );
 };
