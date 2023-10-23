@@ -93,11 +93,10 @@ export default function useApi() {
     return apiClient.delete(`users/${id}`, token);
   }
 
-  
+
   function getRecetteSearchAnswer(data) {
-    return apiClient.post('recettes', data, token);
+    return apiClient.post("recette-search", data, token);
   }
- 
    function getRecettes() {
     return apiClient.get('recettes', token);
   }
