@@ -72,8 +72,6 @@ const Hero: React.FC = () => {
           Quelle recette souhaitez-vous aujourd'hui ?
         </h2>
 
-        <button onClick={toggleChatbot}>Ouvrir le Chatbot</button>
-
         {isChatbotVisible ? <Chatbot /> : null}
 
         <form
@@ -81,6 +79,7 @@ const Hero: React.FC = () => {
           className='flex border p-1 rounded-md text-black bg-gray-100/90 max-w-[700px] w-[80%] mx-auto'
         >
           <Autocomplete
+            style={{ width: '100%' }}
             id='recette-search'
             freeSolo
             options={searchResults.map((recette) => recette.title)}
@@ -90,7 +89,7 @@ const Hero: React.FC = () => {
                 {...params}
                 placeholder="Recherche d'une recette..."
                 className='full-width-textfield'
-                style={{ width: '100%', minWidth: '690px' }}
+                style={{ width: '100%' }}
                 value={inputData}
                 onChange={(e) => setInputData(e.target.value)}
               />
@@ -98,11 +97,19 @@ const Hero: React.FC = () => {
           />
         </form>
 
+<button
+          onClick={toggleChatbot}
+  className='fixed bottom-4 left-1/2 bg-black-500 text-white px-4 py-2 rounded-md cursor-pointer transform -translate-x-1/2'
+        >
+          Ouvrir le Chatbot
+        </button>
+
         {loading && <LoadingScreen />}
         {searchResult && (
           <div style={{ color: 'white', marginTop: '20px' }}>{searchResult}</div>
         )}
       </div>
+      
     </>
   );
 };

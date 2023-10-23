@@ -58,15 +58,16 @@ const routes = [
     ),
 
     children: [
-      
-    
-      {
-        path: "user-profile",
-        element: <UserProfile />,
-      },      
+          
      
     ],
   },
+{
+  path: "user-profile",
+  element : (
+    <UserProfile />
+    ),
+   },
 
    {
      path: "favoris",

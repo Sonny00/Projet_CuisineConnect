@@ -6,7 +6,6 @@ const PageFavoris = () => {
   return (
     <div>
       <h1> Favoris </h1>
-      <Chatbot />
       </div>
   );
 }

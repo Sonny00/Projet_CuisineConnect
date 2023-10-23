@@ -6,27 +6,24 @@ function Chatbot() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isChatbotVisible, setIsChatbotVisible] = useState(true);
 
   const api = useApi();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Add user input to messages
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: input, sender: 'user' },
     ]);
 
-    // Call the API to get a response
     try {
       setLoading(true);
       const response = await api.getRecetteSearchAnswer({ message: input });
 
-      // Extract the AI message from the API response
       const aiMessage = response.data.aiMessage;
 
-      // Add the AI message to the messages
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: aiMessage, sender: 'chatbot' },
@@ -40,10 +37,14 @@ function Chatbot() {
     setInput('');
   };
 
+  const closeChatbot = () => {
+    setIsChatbotVisible(false);
+  };
+
   return (
-    <div className="chatbot-container">
+    <div className={`chatbot-container ${isChatbotVisible ? 'visible' : 'hidden'}`}>
       <div id="header">
-        <h1>Chatbot</h1>
+        <h1>Coco le Cuisto</h1>
       </div>
       <div id="chatbot">
         <div id="conversation">
@@ -69,6 +70,22 @@ function Chatbot() {
             />
             <button id="submit-button" type="submit" disabled={loading}>
               <img className="send-icon" src="send-message.png" alt="" />
+            </button>
+            <button id="close-button" onClick={closeChatbot}>
+              {/* Icône de croix (SVG par exemple) */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
           </div>
         </form>
