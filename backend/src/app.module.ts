@@ -9,6 +9,9 @@ import { UsersModule } from './users/users.module';
 import { RecetteSearchModule } from './recette-search/recette-search.module';
 import { RecettesService } from './recette/recette.service';
 import { RecettesModule } from './recette/recette.module';
+import { CommentaireService } from './commentaire/commentaire.service';
+import { CommentaireController } from './commentaire/commentaire.controller';
+import { CommentaireModule } from './commentaire/commentaire.module';
 
 @Module({
   imports: [
@@ -17,6 +20,7 @@ import { RecettesModule } from './recette/recette.module';
     JwtModule,
     RecetteSearchModule,
     RecettesModule,
+    CommentaireModule,
   ],
   // controllers: [AppController, AuthController],
   providers: [
@@ -25,7 +29,7 @@ import { RecettesModule } from './recette/recette.module';
     PrismaService,
     AuthService,
     RecettesService,
+    CommentaireService,
   ],
-  controllers: [],
 })
 export class AppModule {}

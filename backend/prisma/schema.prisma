@@ -12,13 +12,14 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String?
-  role      Role      @default(USER)
-  firstname String
-  lastname  String
-  favorites Favoris[]
+  id          String        @id @default(uuid())
+  email       String        @unique
+  password    String?
+  role        Role          @default(USER)
+  firstname   String
+  lastname    String
+  favorites   Favoris[]
+  Commentaire Commentaire[]
 }
 
 model Favoris {
@@ -30,12 +31,23 @@ model Favoris {
 }
 
 model Recette {
-  id           String    @id @default(uuid())
+  id           String        @id @default(uuid())
   title        String
   description  String
   instructions String?
   ingredients  String?
   favorites    Favoris[]
+  Commentaire  Commentaire[]
+}
+
+model Commentaire {
+  id         String   @id @default(uuid())
+  userId     String
+  recetteId  String
+  text       String
+  user       User     @relation(fields: [userId], references: [id])
+  recette    Recette  @relation(fields: [recetteId], references: [id])
+  created_at DateTime @default(now())
 }
 
 enum Role {

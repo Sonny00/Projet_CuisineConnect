@@ -45,22 +45,50 @@ function RecetteDetailPage() {
       {recette ? (
         <Card>
           <CardContent>
-            <Typography variant="h4" gutterBottom>
-              {recette.title}
-            </Typography>
-            <Typography color="black">{recette.description}</Typography>
-            <Typography color="black">{recette.ingredients}</Typography>
-          <Typography color="black">{recette.instructions}</Typography>
+            <div style={{ textAlign: 'center' }}>
+              <Typography variant="h4" gutterBottom>
+                {recette.title}
+              </Typography>
+            </div>
           </CardContent>
+
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Description
+              </Typography>
+              <Typography color="black">{recette.description}</Typography>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Ingrédients
+              </Typography>
+              <Typography color="black">{recette.ingredients}</Typography>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Instructions
+              </Typography>
+              <Typography color="black">{recette.instructions}</Typography>
+            </CardContent>
+          </Card>
+
           <CardActions>
             <Button
               onClick={handleToggleFavorite}
               variant="contained"
-              color={favorite ? 'secondary' : 'primary'}
+              color={favorite ? 'primary' : 'primary'}
             >
               {favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
             </Button>
           </CardActions>
+
           <CardContent>
             <TextField
               fullWidth
@@ -72,6 +100,7 @@ function RecetteDetailPage() {
               onChange={(e) => setComment(e.target.value)}
             />
           </CardContent>
+
           <CardActions>
             <Button
               onClick={handleAddComment}
@@ -87,6 +116,6 @@ function RecetteDetailPage() {
       )}
     </Container>
   );
-}
+} 
 
 export default RecetteDetailPage;
