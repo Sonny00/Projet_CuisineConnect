@@ -30,14 +30,23 @@ function RecetteDetailPage() {
   }, [title, api]);
 
   const handleAddComment = () => {
-    // Envoyez la valeur de 'comment' au backend pour l'ajouter à la recette
-    // Réinitialisez 'comment' après avoir ajouté le commentaire
+    api
+      .postComment(recette.id, comment) // Replace 'recette.id' with the actual field containing the recette's ID
+      .then(() => {
+        // Optionally, you can refresh the recette to fetch the updated comments
+        // by re-fetching it from the server. This depends on your application's needs.
+        // api.getRecette(title).then((response) => setRecette(response.data));
+      })
+      .catch((error) => {
+        console.error('Erreur lors de l\'ajout du commentaire', error);
+      });
+
+    // Reset the comment input field after adding the comment
     setComment('');
   };
 
   const handleToggleFavorite = () => {
-    // Envoyez une requête au backend pour ajouter ou supprimer la recette des favoris de l'utilisateur
-    // Mettez à jour l'état 'favorite' en conséquence
+    // Handle toggling favorite as before
   };
 
   return (
@@ -116,6 +125,6 @@ function RecetteDetailPage() {
       )}
     </Container>
   );
-} 
+}
 
 export default RecetteDetailPage;

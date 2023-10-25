@@ -109,6 +109,15 @@ export default function useApi() {
 function getRecetteByTitle(title) {
   return apiClient.get(`recettes/title/${title}`, token);
 }
+
+function getCommentaires(recetteId) {
+  return apiClient.get(`recettes/${recetteId}/commentaires`, token);
+}
+
+function postComment(recetteId, text) {
+  return apiClient.post(`recettes/${recetteId}/commentaires`, { text }, token);
+}
+
  
   return {
     login,
@@ -123,6 +132,8 @@ function getRecetteByTitle(title) {
     getRecetteSearchAnswer,
     getRecettes,
     getRecette,
-    getRecetteByTitle
+    getRecetteByTitle,
+    getCommentaires,
+    postComment,
   };
 }

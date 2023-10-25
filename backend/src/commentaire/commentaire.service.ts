@@ -4,24 +4,10 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class CommentaireService {
-  constructor(private prisma: PrismaService) {}
-
-  async createComment(
-    recetteId: string,
-    userId: string,
-    text: string,
-  ): Promise<Commentaire> {
-    return this.prisma.commentaire.create({
-      data: {
-        recetteId,
-        userId,
-        text,
-      },
-    });
-  }
+  constructor(private readonly prismaService: PrismaService) {}
 
   async getCommentsForRecette(recetteId: string): Promise<Commentaire[]> {
-    return this.prisma.commentaire.findMany({
+    return this.prismaService.commentaire.findMany({
       where: { recetteId },
       include: { user: true },
     });
