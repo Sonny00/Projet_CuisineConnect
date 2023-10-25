@@ -125,6 +125,6 @@ function RecetteDetailPage() {
       )}
     </Container>
   );
-}
+} 
 
 export default RecetteDetailPage;
