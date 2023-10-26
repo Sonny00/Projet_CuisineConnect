@@ -44,43 +44,13 @@ const Profile: FC = () => {
     <Grid container spacing={3}>
       <Grid item md={12} xs={12}>
         <Card>
-          <FollowWrapper>
-            <FlexBox alignItems="center">
-              <IconWrapper>
-                <UserPlusIcon fontSize="small" />
-              </IconWrapper>
-              <Box marginLeft={1.5}>
-                <H6 color="text.disabled" lineHeight={1}>
-                  Formations suivies
-                </H6>
-                <H3 lineHeight={1} mt={0.6}>
-                  {user?.Training?.length}
-                </H3>
-              </Box>
-            </FlexBox>
-            <FlexBox alignItems="center">
-              <IconWrapper color="#FF9777">
-                <FollowerIcon fontSize="small" />
-              </IconWrapper>
-              <Box marginLeft={1.5}>
-                <H6 color="text.disabled" lineHeight={1}>
-                  Evenement suivis
-                </H6>
-                <H3 lineHeight={1} mt={0.6}>
-                  {user?.Event?.length}
-                </H3>
-              </Box>
-            </FlexBox>
-          </FollowWrapper>
-          <Divider />
+          
           <div
             style={{
               padding: "1rem",
             }}
           >
-            <H3 padding={1} fontWeight={600}>
-              Les Skills
-            </H3>
+           
             <div
               style={{
                 display: "flex",
@@ -108,7 +78,7 @@ const Profile: FC = () => {
           <Divider />
 
           <Box padding={3}>
-            <H4 fontWeight={600}>About</H4>
+            <H4 fontWeight={600}>Mes Favoris</H4>
             <Small mt={1} display="block" lineHeight={1.9}>
               {user?.jobTitle}
             </Small>

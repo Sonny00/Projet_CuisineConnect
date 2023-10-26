@@ -59,7 +59,6 @@ export class UsersController {
   }
 
   @Post()
-  //@Roles(UserRole.ADMIN)
   async createUser(@Body(ValidationPipe) user: CreateUserDto): Promise<User> {
     const existingUser = await this.userService.findOneByEmail(user.email);
 

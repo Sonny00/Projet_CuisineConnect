@@ -150,10 +150,7 @@ const UserProfile: FC = () => {
             </ContentWrapper>
 
             <StyledTabList onChange={handleChange}>
-              <StyledTab label="Profile" value="1" />
-              <StyledTab label="Paramètres" value="2" />
-              <StyledTab label="                " value="3" />
-              <StyledTab label="                " value="4" />
+              <StyledTab label="Profile" value="1" />        
             </StyledTabList>
           </FlexBox>
         </StyledCard>

@@ -238,7 +238,7 @@ const Register: FC = () => {
           <Small margin="auto" mt={3} color="text.disabled">
             Vous avez déjà un compte?{" "}
             <Link to="/login">
-              <Small color="primary.main">Se Connecter </Small>
+              <Small color="primary.main">Se connecter </Small>
             </Link>
           </Small>
         </FlexBox>

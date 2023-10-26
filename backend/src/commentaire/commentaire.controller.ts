@@ -1,9 +1,21 @@
-import { UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  ExecutionContext,
+  Body,
+  UseGuards,
+  Param,
+  Request,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport'; // Import AuthGuard
-import { Controller, Post, Body, ValidationPipe, Request } from '@nestjs/common'; // Import Request
 import { CommentaireService } from './commentaire.service';
 import { Commentaire } from '@prisma/client';
-import { Param } from '@nestjs/common';
+import { CreateCommentDto } from './commentaireDto/CreateComment.Dto';
+import { findtheID } from '../users/user.decorator';
+
+interface RequestWithUser extends Request {
+  user: { sub: string };
+}
 
 @Controller('recettes/:recetteId/commentaires')
 @UseGuards(AuthGuard('jwt'))
@@ -13,14 +25,15 @@ export class CommentaireController {
   @Post()
   async createComment(
     @Param('recetteId') recetteId: string,
-    @Body('text') text: string,
-    @Request() req: any,
-  ): Promise<Commentaire> {
-    const userId = req.user.sub;
+    @Body() createCommentDto: CreateCommentDto,
+    @findtheID() userId: string,
+  ) {
+    const comment = await this.commentaireService.createComment(
+      userId,
+      recetteId,
+      createCommentDto.text,
+    );
 
-    return this.commentaireService.createComment(recetteId, userId, text);
+    return comment;
   }
-
-  // Other controller methods
 }
-
