@@ -118,6 +118,19 @@ function postComment(recetteId, text) {
   return apiClient.post(`recettes/${recetteId}/commentaires`, { text }, token);
 }
 
+function addFavorite(recetteId) {
+  return apiClient.post(`recettes/${recetteId}/favoris`, null, token);
+}
+
+function removeFavorite(recetteId) {
+  return apiClient.post(`recettes/${recetteId}/favoris/remove`, null, token);
+}
+
+function getFavoriteRecettes() {
+  return apiClient.get('recettes/favoris', token);
+}
+
+
  
   return {
     login,
@@ -135,5 +148,8 @@ function postComment(recetteId, text) {
     getRecetteByTitle,
     getCommentaires,
     postComment,
+    addFavorite,
+    removeFavorite,
+    getFavoriteRecettes,
   };
 }

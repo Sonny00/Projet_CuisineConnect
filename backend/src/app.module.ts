@@ -12,6 +12,8 @@ import { RecettesModule } from './recette/recette.module';
 import { CommentaireService } from './commentaire/commentaire.service';
 import { CommentaireController } from './commentaire/commentaire.controller';
 import { CommentaireModule } from './commentaire/commentaire.module';
+import { FavorisModule } from './favoris/favoris.module';
+import { FavoriteService } from './favoris/favoris.service';
 
 @Module({
   imports: [
@@ -21,6 +23,7 @@ import { CommentaireModule } from './commentaire/commentaire.module';
     RecetteSearchModule,
     RecettesModule,
     CommentaireModule,
+    FavorisModule,
   ],
   // controllers: [AppController, AuthController],
   providers: [
@@ -30,6 +33,7 @@ import { CommentaireModule } from './commentaire/commentaire.module';
     AuthService,
     RecettesService,
     CommentaireService,
+    FavoriteService,
   ],
 })
 export class AppModule {}

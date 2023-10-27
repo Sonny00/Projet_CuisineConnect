@@ -18,16 +18,8 @@ model User {
   role        Role          @default(USER)
   firstname   String
   lastname    String
-  favorites   Favoris[]
+  favorites   Recette[]     @relation("UserFavorites")
   Commentaire Commentaire[]
-}
-
-model Favoris {
-  id        String  @id @default(uuid())
-  userId    String
-  recetteId String
-  user      User    @relation(fields: [userId], references: [id])
-  recette   Recette @relation(fields: [recetteId], references: [id])
 }
 
 model Recette {
@@ -36,8 +28,8 @@ model Recette {
   description  String
   instructions String?
   ingredients  String?
-  favorites    Favoris[]
   Commentaire  Commentaire[]
+  favorites    User[]        @relation("UserFavorites")
 }
 
 model Commentaire {

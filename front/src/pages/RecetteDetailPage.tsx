@@ -31,22 +31,34 @@ function RecetteDetailPage() {
 
   const handleAddComment = () => {
     api
-      .postComment(recette.id, comment) // Replace 'recette.id' with the actual field containing the recette's ID
+      .postComment(recette.id, comment) 
       .then(() => {
-        // Optionally, you can refresh the recette to fetch the updated comments
-        // by re-fetching it from the server. This depends on your application's needs.
-        // api.getRecette(title).then((response) => setRecette(response.data));
+        
       })
       .catch((error) => {
         console.error('Erreur lors de l\'ajout du commentaire', error);
       });
 
-    // Reset the comment input field after adding the comment
     setComment('');
   };
-
   const handleToggleFavorite = () => {
-    // Handle toggling favorite as before
+    if (favorite) {
+      api.removeFavorite(recette.id)
+        .then(() => {
+          setFavorite(false);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la suppression de la recette des favoris', error);
+        });
+    } else {
+      api.addFavorite(recette.id)
+        .then(() => {
+          setFavorite(true);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de l\'ajout de la recette aux favoris', error);
+        });
+    }
   };
 
   return (
