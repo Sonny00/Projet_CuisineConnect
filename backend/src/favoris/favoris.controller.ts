@@ -6,6 +6,7 @@ import {
   UseGuards,
   Param,
   Request,
+  Delete,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport'; // Import AuthGuard
 import { Commentaire } from '@prisma/client';
@@ -30,7 +31,7 @@ export class FavoriteController {
     return updatedUser;
   }
 
-  @Post('recettes/:recetteId/favoris/remove')
+  @Delete()
   async removeFromFavorites(
     @findtheID() userId: string,
     @Param('recetteId') recetteId: string,
