@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Commentaire, Recette, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { CreateCommentDto } from './commentaireDto/CreateComment.Dto';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class CommentaireService {
@@ -9,8 +11,13 @@ export class CommentaireService {
   async createComment(
     userId: string,
     recetteId: string,
-    text: string,
+    createCommentDto: CreateCommentDto,
   ): Promise<Commentaire> {
+    const { text } = createCommentDto;
+    if (!text) {
+      throw new BadRequestException('Le champ "text" ne peut pas être vide');
+    }
+
     const comment = await this.prisma.commentaire.create({
       data: {
         userId,

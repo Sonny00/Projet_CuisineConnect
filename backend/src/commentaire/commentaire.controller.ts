@@ -31,7 +31,7 @@ export class CommentaireController {
     const comment = await this.commentaireService.createComment(
       userId,
       recetteId,
-      createCommentDto.text,
+      createCommentDto,
     );
 
     return comment;
