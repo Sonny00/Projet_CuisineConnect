@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useApi from '../hooks/useApi';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useApi from "../hooks/useApi";
 import {
   Card,
   CardContent,
@@ -9,14 +9,16 @@ import {
   Button,
   TextField,
   Container,
-} from '@mui/material';
+} from "@mui/material";
 
 function RecetteDetailPage() {
   const { title } = useParams<{ title: string }>();
   const api = useApi();
   const [recette, setRecette] = useState<any>(null);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [favorite, setFavorite] = useState(false);
+  const [userRating, setUserRating] = useState(0);
+  const [showRatingForm, setShowRatingForm] = useState(false);
 
   useEffect(() => {
     api
@@ -25,38 +27,56 @@ function RecetteDetailPage() {
         setRecette(response.data);
       })
       .catch((error) => {
-        console.error('Erreur lors de la récupération de la recette', error);
+        console.error("Erreur lors de la récupération de la recette", error);
       });
   }, [title, api]);
 
   const handleAddComment = () => {
     api
-      .postComment(recette.id, comment) 
-      .then(() => {
-        
-      })
+      .postComment(recette.id, comment)
+      .then(() => {})
       .catch((error) => {
-        console.error('Erreur lors de l\'ajout du commentaire', error);
+        console.error("Erreur lors de l'ajout du commentaire", error);
       });
 
-    setComment('');
+    setComment("");
   };
+
+  const handleSaveRating = () => {
+    if (userRating > 0) {
+      api
+        .addNote(recette.id, userRating)
+        .then(() => {})
+        .catch((error) => {
+          console.error("Erreur lors de l'ajout de la note", error);
+        });
+    }
+  };
+
   const handleToggleFavorite = () => {
     if (favorite) {
-      api.removeFavorite(recette.id)
+      api
+        .removeFavorite(recette.id)
         .then(() => {
           setFavorite(false);
         })
         .catch((error) => {
-          console.error('Erreur lors de la suppression de la recette des favoris', error);
+          console.error(
+            "Erreur lors de la suppression de la recette des favoris",
+            error
+          );
         });
     } else {
-      api.addFavorite(recette.id)
+      api
+        .addFavorite(recette.id)
         .then(() => {
           setFavorite(true);
         })
         .catch((error) => {
-          console.error('Erreur lors de l\'ajout de la recette aux favoris', error);
+          console.error(
+            "Erreur lors de l'ajout de la recette aux favoris",
+            error
+          );
         });
     }
   };
@@ -66,10 +86,27 @@ function RecetteDetailPage() {
       {recette ? (
         <Card>
           <CardContent>
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: "center" }}>
               <Typography variant="h4" gutterBottom>
                 {recette.title}
               </Typography>
+              <Button
+                onClick={handleToggleFavorite}
+                variant="contained"
+                style={{
+                  backgroundColor: favorite ? "black" : "black",
+                  color: "white",
+                }}
+              >
+                {favorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+              </Button>{" "}
+              <Button
+                onClick={() => setShowRatingForm(!showRatingForm)}
+                variant="contained"
+                style={{ backgroundColor: "black", color: "white" }}
+              >
+                Noter cette recette
+              </Button>
             </div>
           </CardContent>
 
@@ -100,15 +137,28 @@ function RecetteDetailPage() {
             </CardContent>
           </Card>
 
-          <CardActions>
-            <Button
-              onClick={handleToggleFavorite}
-              variant="contained"
-              color={favorite ? 'primary' : 'primary'}
-            >
-              {favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-            </Button>
-          </CardActions>
+          {showRatingForm ? (
+            <div>
+              <p>Donnez une note :</p>
+              <div>
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setUserRating(index + 1)}
+                      style={{
+                        backgroundColor:
+                          userRating >= index + 1 ? "gold" : "transparent",
+                      }}
+                    >
+                      ★
+                    </button>
+                  ))}
+              </div>
+              <button onClick={handleSaveRating}>Enregistrer la note</button>
+            </div>
+          ) : null}
 
           <CardContent>
             <TextField
@@ -126,7 +176,7 @@ function RecetteDetailPage() {
             <Button
               onClick={handleAddComment}
               variant="contained"
-              color="primary"
+              style={{ backgroundColor: "black", color: "white" }}
             >
               Ajouter un commentaire
             </Button>
@@ -137,6 +187,6 @@ function RecetteDetailPage() {
       )}
     </Container>
   );
-} 
+}
 
 export default RecetteDetailPage;

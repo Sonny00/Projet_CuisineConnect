@@ -14,6 +14,10 @@ import { CommentaireController } from './commentaire/commentaire.controller';
 import { CommentaireModule } from './commentaire/commentaire.module';
 import { FavorisModule } from './favoris/favoris.module';
 import { FavoriteService } from './favoris/favoris.service';
+import { NoteModule } from './notes/notes.module';
+import { NoteService } from './notes/notes.service';
+import { PreferenceModule } from './preference/preference.module';
+import { PreferenceService } from './preference/preference.service';
 
 @Module({
   imports: [
@@ -24,6 +28,8 @@ import { FavoriteService } from './favoris/favoris.service';
     RecettesModule,
     CommentaireModule,
     FavorisModule,
+    NoteModule,
+    PreferenceModule,
   ],
   // controllers: [AppController, AuthController],
   providers: [
@@ -34,6 +40,8 @@ import { FavoriteService } from './favoris/favoris.service';
     RecettesService,
     CommentaireService,
     FavoriteService,
+    NoteService,
+    PreferenceService,
   ],
 })
 export class AppModule {}

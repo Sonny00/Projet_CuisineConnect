@@ -20,6 +20,8 @@ model User {
   lastname    String
   favorites   Recette[]     @relation("UserFavorites")
   Commentaire Commentaire[]
+  notes       Note[]
+  preferences Preference[] // Changez cette ligne pour définir une relation one-to-many avec "Preference"
 }
 
 model Recette {
@@ -30,6 +32,7 @@ model Recette {
   ingredients  String?
   Commentaire  Commentaire[]
   favorites    User[]        @relation("UserFavorites")
+  notes        Note[] // Nouvelle relation avec les notes
 }
 
 model Commentaire {
@@ -40,6 +43,23 @@ model Commentaire {
   user       User     @relation(fields: [userId], references: [id])
   recette    Recette  @relation(fields: [recetteId], references: [id])
   created_at DateTime @default(now())
+}
+
+model Note {
+  id        String  @id @default(uuid())
+  userId    String
+  recetteId String
+  rating    Int // Le champ "rating" représente la note attribuée par l'utilisateur
+  user      User    @relation(fields: [userId], references: [id])
+  recette   Recette @relation(fields: [recetteId], references: [id])
+}
+
+model Preference {
+  id                String   @id @default(uuid())
+  userId            String
+  allergies         String[]
+  contreIndications String[]
+  user              User     @relation(fields: [userId], references: [id])
 }
 
 enum Role {

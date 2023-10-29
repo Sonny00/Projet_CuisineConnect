@@ -123,12 +123,51 @@ function addFavorite(recetteId) {
 }
 
 function removeFavorite(recetteId) {
-  return apiClient.post(`recettes/${recetteId}/favoris/remove`, null, token);
+  return apiClient.delete(`recettes/${recetteId}/favoris`, token);
 }
 
 function getFavoriteRecettes() {
   return apiClient.get('recettes/favoris', token);
 }
+
+function addNote(recetteId, rating) {
+
+  apiClient.get(`recettes/${recetteId}/notes`, token)
+    .then((response) => {
+      if (response.data.length === 0) {
+     
+        apiClient.post(`recettes/${recetteId}/notes`, { rating }, token)
+          .then(() => {
+
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la création de la note', error);
+          });
+      } else {
+        const noteId = response.data[0].id; 
+        apiClient.put(`recettes/${recetteId}/notes/${noteId}`, { rating }, token)
+          .then(() => {
+          
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la mise à jour de la note', error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error('Erreur lors de la vérification de la note', error);
+    });
+}
+
+
+function updateNote(noteId, rating) {
+  return apiClient.patch(`notes/${noteId}`, { rating }, token);
+}
+
+function deleteNote(noteId) {
+  return apiClient.delete(`notes/${noteId}`, token);
+}
+
 
 
  
@@ -151,5 +190,8 @@ function getFavoriteRecettes() {
     addFavorite,
     removeFavorite,
     getFavoriteRecettes,
+    addNote,
+    updateNote,
+    deleteNote,
   };
 }
