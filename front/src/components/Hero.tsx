@@ -63,7 +63,13 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <div className='absolute top-0 left-0 w-full h-full bg-gray-900/30'></div>
+      <div className='absolute top-0 left-0 w-full h-full' style={{
+  backgroundImage: 'url(https://as1.ftcdn.net/v2/jpg/04/97/45/38/1000_F_497453879_CoPFJDklwqFUWdGzu6WTpwch2GKLPyue.jpg)', // Remplacez "background.jpg" par le chemin de votre image
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  opacity: 1, // pour définir la transparence (facultatif)
+}}> </div>
       <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center text-center'>
         <h1 className='text-white mb-2' style={{ fontSize: '20px' }}>
           Bienvenue sur CuisineConnect

@@ -153,9 +153,18 @@ const recette8 = await prisma.recette.create({
 }
 
 async function resetDB() {
+  const usersToDelete = await prisma.user.findMany();
+  
+  for (const user of usersToDelete) {
+    await prisma.commentaire.deleteMany({
+      where: {
+        userId: user.id,
+      },
+    });
+  }
+
   await prisma.user.deleteMany({});
 
-  // eslint-disable-next-line no-console
   console.log('database reset');
 }
 

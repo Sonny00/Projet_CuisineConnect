@@ -58,7 +58,7 @@ const ProfilePopover: FC = () => {
             src={user?.avatar || "/static/avatar/avatar.svg"}
             sx={{ width: 30, height: 30, ml: 1 }}
           /> */}
-          <Icons.UserProfileIcon sx={{color: "#282B2A"}} />
+          <Icons.UserProfileIcon sx={{color: "white"}} />
         </Badge>
       </ButtonBase>
 

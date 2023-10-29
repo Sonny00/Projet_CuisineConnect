@@ -41,7 +41,7 @@ const ToggleIcon = styled(Box)(({ theme }) => ({
   margin: "5px",
   borderRadius: "10px",
   transition: "width 0.3s",
-  backgroundColor: "black",
+  backgroundColor: "white",
 }));
 
 // root component
@@ -71,7 +71,7 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
             />
           </Box> */}
 
-        
+
           <ProfilePopover />
         </StyledToolBar>
       </DashboardNavbarRoot>

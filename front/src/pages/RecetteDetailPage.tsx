@@ -19,6 +19,8 @@ function RecetteDetailPage() {
   const [favorite, setFavorite] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [showRatingForm, setShowRatingForm] = useState(false);
+  const [commentaires, setCommentaires] = useState([]);
+
 
   useEffect(() => {
     api
@@ -29,7 +31,30 @@ function RecetteDetailPage() {
       .catch((error) => {
         console.error("Erreur lors de la récupération de la recette", error);
       });
+  
   }, [title, api]);
+
+  // useEffect(() => {
+  //   let intervalId;
+  
+  //   const fetchCommentaires = () => {
+  //     if (recette) {
+  //       api.getCommentaires(recette.id)
+  //         .then((response) => {
+  //           setCommentaires(response.data);
+  //         })
+  //         .catch((error) => {
+  //           console.error("Erreur lors de la récupération des commentaires", error);
+  //         });
+  //     }
+  //   };
+  
+  //   fetchCommentaires();
+  //   intervalId = setInterval(fetchCommentaires, 10000);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [recette, api]);
 
   const handleAddComment = () => {
     api
@@ -52,6 +77,7 @@ function RecetteDetailPage() {
         });
     }
   };
+
 
   const handleToggleFavorite = () => {
     if (favorite) {
@@ -80,6 +106,8 @@ function RecetteDetailPage() {
         });
     }
   };
+
+ 
 
   return (
     <Container maxWidth="md">
@@ -181,7 +209,21 @@ function RecetteDetailPage() {
               Ajouter un commentaire
             </Button>
           </CardActions>
+          <Card>
+          <div>
+              <Typography variant="h6" gutterBottom>
+                Commentaires
+              </Typography>
+              {commentaires.map((commentaire) => (
+                <div key={commentaire.id}>
+                  <Typography>{commentaire.text}</Typography>
+                </div>
+              ))}
+            </div>
+            </Card>
+
         </Card>
+        
       ) : (
         <p>Chargement en cours...</p>
       )}

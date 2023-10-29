@@ -6,6 +6,7 @@ import {
   UseGuards,
   Param,
   Request,
+  Get,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport'; // Import AuthGuard
 import { CommentaireService } from './commentaire.service';
@@ -35,5 +36,12 @@ export class CommentaireController {
     );
 
     return comment;
+  }
+
+  @Get()
+  async getCommentaires(
+    @Param('recetteId') recetteId: string,
+  ): Promise<Commentaire[]> {
+    return this.commentaireService.getCommentsForRecette(recetteId);
   }
 }

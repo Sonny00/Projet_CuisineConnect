@@ -8,5 +8,5 @@ const Favoris = () => {
     </div>
   </>;
 };
-
+  
 export default Favoris;
