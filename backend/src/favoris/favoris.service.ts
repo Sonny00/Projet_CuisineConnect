@@ -62,4 +62,17 @@ export class FavoriteService {
 
     return updatedUser;
   }
+
+  async getFavorites(userId: string): Promise<Recette[]> {
+    const userWithFavorites = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { favorites: true },
+    });
+
+    if (!userWithFavorites) {
+      throw new NotFoundException('Utilisateur non trouvé');
+    }
+
+    return userWithFavorites.favorites;
+  }
 }

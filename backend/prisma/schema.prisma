@@ -21,7 +21,7 @@ model User {
   favorites   Recette[]     @relation("UserFavorites")
   Commentaire Commentaire[]
   notes       Note[]
-  preferences Preference[] // Changez cette ligne pour définir une relation one-to-many avec "Preference"
+  preferences Preference[]
 }
 
 model Recette {
@@ -30,9 +30,10 @@ model Recette {
   description  String
   instructions String?
   ingredients  String?
+  type         String?
   Commentaire  Commentaire[]
   favorites    User[]        @relation("UserFavorites")
-  notes        Note[] // Nouvelle relation avec les notes
+  notes        Note[]
 }
 
 model Commentaire {
@@ -49,7 +50,7 @@ model Note {
   id        String  @id @default(uuid())
   userId    String
   recetteId String
-  rating    Int // Le champ "rating" représente la note attribuée par l'utilisateur
+  rating    Int
   user      User    @relation(fields: [userId], references: [id])
   recette   Recette @relation(fields: [recetteId], references: [id])
 }

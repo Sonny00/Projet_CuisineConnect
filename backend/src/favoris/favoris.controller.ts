@@ -1,45 +1,38 @@
 import {
   Controller,
   Post,
-  ExecutionContext,
-  Body,
-  UseGuards,
+  Get,
   Param,
-  Request,
-  Delete,
+  UseGuards,
+  Delete
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport'; // Import AuthGuard
-import { Commentaire } from '@prisma/client';
-import { findtheID } from '../users/user.decorator';
+import { AuthGuard } from '@nestjs/passport';
 import { FavoriteService } from './favoris.service';
-import { NotFoundException } from '@nestjs/common';
+import { findtheID } from '../users/user.decorator';
 
-@Controller('recettes/:recetteId/favoris')
-@UseGuards(AuthGuard('jwt'))
+@Controller()
 export class FavoriteController {
   constructor(private readonly favoritesService: FavoriteService) {}
 
-  @Post()
+  @Post('recettes/:recetteId/favoris')
+  @UseGuards(AuthGuard('jwt'))
   async addToFavorites(
     @findtheID() userId: string,
     @Param('recetteId') recetteId: string,
   ) {
-    const updatedUser = await this.favoritesService.addToFavorites(
-      userId,
-      recetteId,
-    );
-    return updatedUser;
+    return await this.favoritesService.addToFavorites(userId, recetteId);
   }
 
-  @Delete()
+  @Get('users/:userId/favoris')
+  async getFavorites(@Param('userId') userId: string) {
+    return await this.favoritesService.getFavorites(userId);
+  }
+
+  @Delete('recettes/:recetteId/favoris')
   async removeFromFavorites(
     @findtheID() userId: string,
     @Param('recetteId') recetteId: string,
   ) {
-    const updatedUser = await this.favoritesService.removeFromFavorites(
-      userId,
-      recetteId,
-    );
-    return updatedUser;
+    return await this.favoritesService.removeFromFavorites(userId, recetteId);
   }
 }

@@ -30,7 +30,6 @@ export class RecetteSearchService {
 
     let aiMessage = result.content;
 
-    // Ajoutez le style du chef étoilé Michelin ici
     aiMessage = this.addMichelinStarChefStyle(aiMessage);
 
     this.history.addAIMessage(aiMessage);

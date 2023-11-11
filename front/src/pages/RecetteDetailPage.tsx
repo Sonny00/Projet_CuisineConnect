@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useApi from "../hooks/useApi";
 import {
   Card,
@@ -20,19 +20,37 @@ function RecetteDetailPage() {
   const [userRating, setUserRating] = useState(0);
   const [showRatingForm, setShowRatingForm] = useState(false);
   const [commentaires, setCommentaires] = useState([]);
+  const navigate = useNavigate();
 
+     useEffect(() => {
+    let mounted = true;
 
-  useEffect(() => {
-    api
-      .getRecette(title)
-      .then((response) => {
-        setRecette(response.data);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération de la recette", error);
-      });
-  
+    const fetchData = async () => {
+      try {
+        const [recetteResponse, commentairesResponse] = await Promise.all([
+          api.getRecette(title),
+          api.getCommentaires(title), // Assurez-vous que votre API supporte cela
+        ]);
+
+        if (mounted) {
+          setRecette(recetteResponse.data);
+          setCommentaires(commentairesResponse.data);
+          setFavorite(recetteResponse.data.favorite);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données', error);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+    };
   }, [title, api]);
+
+
+  
 
   // useEffect(() => {
   //   let intervalId;
@@ -78,6 +96,10 @@ function RecetteDetailPage() {
     }
   };
 
+  const handleBackToMenu = () => {
+    navigate('/'); 
+  };
+
 
   const handleToggleFavorite = () => {
     if (favorite) {
@@ -110,7 +132,16 @@ function RecetteDetailPage() {
  
 
   return (
+    
     <Container maxWidth="md">
+       <Button 
+        variant="contained" 
+        onClick={handleBackToMenu}
+        style={{ backgroundColor: "black", color: "white", marginBottom: '20px' }}
+      >
+        Retour au menu
+      </Button>
+      
       {recette ? (
         <Card>
           <CardContent>

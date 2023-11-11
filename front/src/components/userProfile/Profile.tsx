@@ -8,127 +8,56 @@ import UserPlusIcon from "../../icons/UserPlusIcon";
 import { FC, MouseEvent, useState } from "react";
 import PostCard from "./PostCard";
 import useAuth from "../../hooks/useAuth";
+import useApi from "../../hooks/useApi";
+import { useEffect } from "react";
 
-// styled components
-const IconWrapper = styled(Box)<{ color?: string }>(({ theme, color }) => ({
-  width: 40,
-  height: 40,
-  color: "white",
-  display: "flex",
-  borderRadius: "4px",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: color ? color : theme.palette.primary.main,
-}));
-
-const FollowWrapper = styled(Box)(() => ({
-  maxWidth: 300,
-  margin: "auto",
-  paddingTop: 32,
-  paddingBottom: 32,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-}));
 
 const Profile: FC = () => {
   const { user } = useAuth();
+  const [favorites, setFavorites] = useState([]); 
+  const api = useApi();
 
-  const [moreEl, setMoreEl] = useState<null | HTMLElement>(null);
-  const handleMoreOpen = (event: MouseEvent<HTMLButtonElement>) => {
-    setMoreEl(event.currentTarget);
+useEffect(() => {
+  const fetchFavorites = async () => {
+    try {
+      const response = await api.getFavoriteRecettes(user?.id);
+      setFavorites(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des favoris", error);
+    }
   };
-  const handleMoreClose = () => setMoreEl(null);
+
+  fetchFavorites();
+}, [api, user?.id]);
+
+
 
   return (
     <Grid container spacing={3}>
       <Grid item md={12} xs={12}>
         <Card>
-          
-          <div
-            style={{
-              padding: "1rem",
-            }}
-          >
-           
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "1rem",
-              }}
-            >
-              {user?.skills?.map((skill: any) => (
-                <div
-                  style={{
-                    backgroundColor: "#f5f5f5",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <Box padding={1} key={skill.id}>
-                    <H4 fontWeight={600}>{skill.name}</H4>
-                    <Small mt={1} display="block" lineHeight={1}>
-                      {skill.type}
-                    </Small>
-                  </Box>
-                </div>
-              ))}
-            </div>
-          </div>
-          <Divider />
-
+          {/* ... autres sections ... */}
           <Box padding={3}>
             <H4 fontWeight={600}>Mes Favoris</H4>
-            <Small mt={1} display="block" lineHeight={1.9}>
-              {user?.jobTitle}
-            </Small>
-
-            <Box mt={3}>
-              {details.map(({ Icon, smallText, boldText }, index) => (
-                <FlexBox alignItems="center" mt={1.5} key={index}>
-                  <Icon />
-                  <H6 marginLeft={1}>
-                    <Small>{smallText}</Small> {boldText}
-                  </H6>
-                </FlexBox>
+            <Grid container spacing={2}>
+              {favorites.map((fav, index) => (
+                <Grid item key={index} xs={12} sm={6} md={4}>
+                  <Card>
+                    {/* Ici, vous pouvez ajouter le contenu de la carte, 
+                        comme le titre et la description de la recette */}
+                    <Box padding={2}>
+                      <H6>{fav.title}</H6>
+                      <Small color="text.secondary">{fav.description}</Small>
+                    </Box>
+                  </Card>
+                </Grid>
               ))}
-            </Box>
+            </Grid>
           </Box>
         </Card>
       </Grid>
     </Grid>
   );
 };
-
-const details = [
-  {
-    Icon: Place,
-    boldText: "France",
-    smallText: "",
-  },
-  {
-    Icon: BusinessCenter,
-    boldText: "",
-    smallText: "5IWJ",
-  },
-  {
-    Icon: BusinessCenter,
-    boldText: "",
-    smallText: "5IWJ",
-  },
-];
-
-const postList = [
-  {
-    id: 1,
-    postTitle: "Bonjour",
-    postImage: "",
-  },
-  {
-    id: 2,
-    postTitle: "Test",
-    postImage: "",
-  },
-];
 
 export default Profile;

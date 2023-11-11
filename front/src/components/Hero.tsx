@@ -5,10 +5,11 @@ import useApi from '../hooks/useApi';
 import LoadingScreen from './LoadingScreen';
 import './HeroStyle.css';
 import { useNavigate } from 'react-router-dom';
-import Chatbot from './Chatbot'; // Assurez-vous d'importer votre composant Chatbot
+import Chatbot from './Chatbot';
 
 const Hero: React.FC = () => {
   const { getRecetteByTitle } = useApi();
+  const { searchBarRecettes } = useApi();
   const [inputData, setInputData] = useState<string>('');
   const [searchResult, setSearchResult] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,16 +47,10 @@ const Hero: React.FC = () => {
 
     try {
       setLoading(true);
-
-      const response = await getRecetteByTitle(inputData);
-
-      if (response.data) {
-        navigate(`/recette/${response.data.id}`);
-      } else {
-        setSearchResult('Aucune recette trouvée');
-      }
+      const response = await searchBarRecettes(inputData);
+      navigate('/search-results', { state: { recettes: response.data } });
     } catch (error) {
-      console.error(error);
+      console.error('Erreur lors de la recherche des recettes', error);
     } finally {
       setLoading(false);
     }
@@ -68,7 +63,7 @@ const Hero: React.FC = () => {
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
-  opacity: 1, // pour définir la transparence (facultatif)
+  opacity: 1,
 }}> </div>
       <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center text-center'>
         <h1 className='text-white mb-2' style={{ fontSize: '20px' }}>

@@ -18,6 +18,7 @@ import { NoteModule } from './notes/notes.module';
 import { NoteService } from './notes/notes.service';
 import { PreferenceModule } from './preference/preference.module';
 import { PreferenceService } from './preference/preference.service';
+import { RecetteBarModule } from './recetteBar/recetteBar.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PreferenceService } from './preference/preference.service';
     FavorisModule,
     NoteModule,
     PreferenceModule,
+    RecetteBarModule,
   ],
   // controllers: [AppController, AuthController],
   providers: [

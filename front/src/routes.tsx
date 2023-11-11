@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import GuestGuard from "./components/authentication/GuestGuard";
 import DashboardLayout from "./components/Layouts/DashboardLayout";
 import LoadingScreen from "./components/LoadingScreen";
-
+  
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
   (
     <Suspense fallback={<LoadingScreen />}>
@@ -19,15 +19,19 @@ const Register = Loadable(
 );
 const DashboardSaaS = Loadable(lazy(() => import("./pages/dashboards/SaaS")));
 
-// user profile
 const UserProfile = Loadable(lazy(() => import("./pages/UserProfile")));
 
 const Favoris = Loadable(lazy(() => import("./pages/Favoris")));
 
-const RecetteDetailPage = Loadable(lazy(() => import("./pages/RecetteDetailPage")));
+const RecetteDetailPage = Loadable(
+  lazy(() => import("./pages/RecetteDetailPage"))
+);
+
+const SearchResultsPage = Loadable(
+  lazy(() => import("./pages/SearchResultsPage"))
+);
 
 const Error = Loadable(lazy(() => import("./pages/404")));
-
 
 // routes
 const routes = [
@@ -45,10 +49,10 @@ const routes = [
     ),
   },
 
-   {
-        path: "register",
-        element: <Register />
-   },
+  {
+    path: "register",
+    element: <Register />,
+  },
   {
     path: "dashboard",
     element: (
@@ -57,44 +61,49 @@ const routes = [
       </AuthGuard>
     ),
 
-    children: [
-          
-     
-    ],
-  },
-{
-  path: "user-profile",
-  element : (
-    <UserProfile />
-    ),
-   },
-
-   {
-     path: "favoris",
-     element : (
-     <AuthGuard>
-     <Favoris />,
-          </AuthGuard>
-     ),
+    children: [],
   },
 
-    {
-      path: "recette/:title", // Utilisez un paramètre dynamique ":id" pour l'ID de la recette
-      element: (
-        <AuthGuard>
-          <RecetteDetailPage />,
-        </AuthGuard>
-      ),
-    },
-      
   {
-     path: "recette-detail",
-     element : (
-     <AuthGuard>
-     <RecetteDetailPage />,
-          </AuthGuard>
-     ),
-      },
+    path: "user-profile",
+    element: <UserProfile />,
+  },
+
+  {
+    path: "favoris",
+    element: (
+      <AuthGuard>
+        <Favoris />,
+      </AuthGuard>
+    ),
+  },
+
+  {
+    path: "search-results",
+    element: (
+      <AuthGuard>
+        <SearchResultsPage />
+      </AuthGuard>
+    ),
+  },
+
+  {
+    path: "recette/:title",
+    element: (
+      <AuthGuard>
+        <RecetteDetailPage />,
+      </AuthGuard>
+    ),
+  },
+
+  {
+    path: "recette-detail",
+    element: (
+      <AuthGuard>
+        <RecetteDetailPage />,
+      </AuthGuard>
+    ),
+  },
   {
     path: "*",
     element: <Error />,

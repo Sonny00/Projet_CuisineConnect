@@ -6,7 +6,7 @@ import { UpdateRecetteDto } from './recetteDto/update-recette.dto';
 
 @Injectable()
 export class RecettesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(data: CreateRecetteDto): Promise<Recette> {
     const recetteData = this.prisma.recette.create({
@@ -65,5 +65,68 @@ export class RecettesService {
     });
 
     return 'deleted';
+  }
+
+  async findByIngredient(ingredient: string): Promise<Recette[]> {
+    return this.prisma.recette.findMany({
+      where: {
+        OR: [
+          {
+            ingredients: {
+              contains: ingredient,
+              mode: 'insensitive',
+            },
+          },
+          {
+            description: {
+              contains: ingredient,
+              mode: 'insensitive',
+            },
+          },
+        ],
+      },
+    });
+  }
+
+  async findByType(type: string): Promise<Recette[]> {
+    return this.prisma.recette.findMany({
+      where: {
+        type: {
+          equals: type,
+          mode: 'insensitive',
+        },
+      },
+    });
+  }
+
+  async findByIntent(intent: string): Promise<any> {
+    return this.prisma.recette.findMany({
+      where: {
+        AND: [
+          {
+            type: 'dessert',
+          },
+          {
+            ingredients: {
+              contains: 'fruits',
+              mode: 'insensitive',
+            },
+          },
+        ],
+      },
+    });
+  }
+  async findByKeywords(keywords: string[]): Promise<Recette[]> {
+    const orConditions = keywords.map((keyword) => ({
+      ingredients: {
+        contains: keyword,
+      },
+    }));
+
+    return this.prisma.recette.findMany({
+      where: {
+        OR: orConditions,
+      },
+    });
   }
 }

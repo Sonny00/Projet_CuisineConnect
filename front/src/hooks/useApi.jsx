@@ -39,6 +39,8 @@ const apiClient = {
       headers: getRequestHeaders(token),
     });
   },
+
+
 };
 
 export default function useApi() {
@@ -159,7 +161,6 @@ function addNote(recetteId, rating) {
     });
 }
 
-
 function updateNote(noteId, rating) {
   return apiClient.patch(`notes/${noteId}`, { rating }, token);
 }
@@ -168,8 +169,20 @@ function deleteNote(noteId) {
   return apiClient.delete(`notes/${noteId}`, token);
 }
 
+function searchRecettes(prompt) {
+  return apiClient.post('/search', { prompt }, token);
+}
+ 
+function searchBarRecettes(prompt) {
+  return apiClient.post('/recherche-bar/search', { prompt }, token);
+  }
 
 
+function getFavoriteRecettes(userId, token = null) {
+  return axiosInstance.get(`/users/${userId}/favoris`, {
+    headers: getRequestHeaders(token),
+  });
+}
  
   return {
     login,
@@ -193,5 +206,8 @@ function deleteNote(noteId) {
     addNote,
     updateNote,
     deleteNote,
+    searchRecettes,
+    searchBarRecettes,
+    getFavoriteRecettes,
   };
 }
