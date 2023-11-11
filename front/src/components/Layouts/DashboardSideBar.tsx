@@ -14,13 +14,13 @@ import ScrollBar from "simplebar-react";
 import topMenuList from "./topMenuList";
 import { Link } from "react-router-dom";import useAuth from "../../hooks/useAuth";
 
-// root component interface
+
 interface SideNavBarProps {
   showMobileSideBar: boolean;
   closeMobileSideBar: () => void;
 }
 
-// custom styled components
+
 const MainMenu = styled(Box)(({ theme }) => ({
   left: 0,
   width: 80,
@@ -61,7 +61,7 @@ const DashboardSideBar: FC<SideNavBarProps> = ({
     closeMobileSideBar();
   };
 
-  // main menus content
+  
   const mainSideBarContent = (
     <List sx={{ height: "100%" }}>
     
@@ -89,7 +89,7 @@ const DashboardSideBar: FC<SideNavBarProps> = ({
     </List>
   );
 
-  // for mobile device
+
   if (downMd) {
     return (
       <Drawer

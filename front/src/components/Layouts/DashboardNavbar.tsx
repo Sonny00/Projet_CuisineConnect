@@ -49,17 +49,14 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
   setShowMobileSideBar,
 }) => {
   const { title } = useContext(TitleContext);
-  const upSm = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const downSm = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   if (downSm) {
     return (
-      <DashboardNavbarRoot position="sticky">
-        <StyledToolBar>
+<DashboardNavbarRoot style={{ position: "sticky", backdropFilter: "blur(1px)" }}>
+        <StyledToolBar style={{ backdropFilter: "blur(1px)" }}>
           <Box sx={{ cursor: "pointer" }} onClick={setShowMobileSideBar}>
-            <ToggleIcon />
-            <ToggleIcon />
-            <ToggleIcon />
+            
           </Box>
 
           {/* <Box flexGrow={1} textAlign="center">
@@ -79,7 +76,7 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
   }
 
   return (
-    <DashboardNavbarRoot position="sticky">
+<DashboardNavbarRoot style={{ position: "sticky", backdropFilter: "blur(1px)" }}>
       <StyledToolBar>
         <H2
           fontSize={21}
@@ -88,7 +85,7 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
           fontWeight="700"
           color="text.primary"
         >
-          {title}
+        
         </H2>
 
         <Box flexGrow={1} ml={1} />

@@ -29,7 +29,7 @@ function RecetteDetailPage() {
       try {
         const [recetteResponse, commentairesResponse] = await Promise.all([
           api.getRecette(title),
-          api.getCommentaires(title), // Assurez-vous que votre API supporte cela
+          api.getCommentaires(title),
         ]);
 
         if (mounted) {

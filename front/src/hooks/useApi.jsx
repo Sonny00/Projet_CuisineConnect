@@ -177,11 +177,8 @@ function searchBarRecettes(prompt) {
   return apiClient.post('/recherche-bar/search', { prompt }, token);
   }
 
-
 function getFavoriteRecettes(userId, token = null) {
-  return axiosInstance.get(`/users/${userId}/favoris`, {
-    headers: getRequestHeaders(token),
-  });
+  return axiosInstance.get(`/users/${userId}/favoris`, token); 
 }
  
   return {
