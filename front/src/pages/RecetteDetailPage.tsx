@@ -30,6 +30,8 @@ function RecetteDetailPage() {
         const [recetteResponse, commentairesResponse] = await Promise.all([
           api.getRecette(title),
           api.getCommentaires(title),
+         // api.getFavoriteRecettes() // Assurez-vous que cette fonction existe et fonctionne correctement
+
         ]);
 
         if (mounted) {
@@ -102,32 +104,27 @@ function RecetteDetailPage() {
 
 
   const handleToggleFavorite = () => {
-    if (favorite) {
-      api
-        .removeFavorite(recette.id)
-        .then(() => {
-          setFavorite(false);
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de la suppression de la recette des favoris",
-            error
-          );
-        });
-    } else {
-      api
-        .addFavorite(recette.id)
-        .then(() => {
-          setFavorite(true);
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de l'ajout de la recette aux favoris",
-            error
-          );
-        });
-    }
-  };
+  if (favorite) {
+    api.removeFavorite(recette.id)
+      .then(() => {
+        setFavorite(false);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la suppression de la recette des favoris", error);
+      });
+  } else {
+    api.addFavorite(recette.id)
+      .then(() => {
+        setFavorite(true);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'ajout de la recette aux favoris", error);
+      });
+  }
+};
+
+        
+   
 
  
 

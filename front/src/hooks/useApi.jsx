@@ -128,9 +128,9 @@ function removeFavorite(recetteId) {
   return apiClient.delete(`recettes/${recetteId}/favoris`, token);
 }
 
-function getFavoriteRecettes() {
-  return apiClient.get('recettes/favoris', token);
-}
+// function getFavoriteRecettes() {
+//   return apiClient.get('recettes/favoris', token);
+// }
 
 function addNote(recetteId, rating) {
 

@@ -4,15 +4,14 @@ import FlexBox from "../components/FlexBox";
 import SearchInput from "../components/SearchInput";
 import { H3, Small } from "../components/Typography";
 import UkoAvatar from "../components/UkoAvatar";
-import FollowerCard from "../components/userProfile/FollowerCard";
-import FriendCard from "../components/userProfile/FriendCard";
-import Gallery from "../components/userProfile/Gallery";
 import Profile from "../components/userProfile/Profile";
 import useAuth from "../hooks/useAuth";
 import useTitle from "../hooks/useTitle";
 import { FC, SyntheticEvent, useState } from "react";
 import useApi from "../hooks/useApi";
 import toast from "react-hot-toast";
+import PreferencesModal from "../components/Preferences";
+
 
 // styled components
 const StyledCard = styled(Card)(() => ({
@@ -52,12 +51,24 @@ const StyledTabPanel = styled(TabPanel)(() => ({
   padding: 0,
 }));
 
+
+
+ 
 const UserProfile: FC = () => {
   useTitle("Mon Profil");
   const { user } = useAuth();
   const [value, setValue] = useState("1");
   const api = useApi();
+  const [isPreferencesModalOpen, setIsPreferencesModalOpen] = useState(false);
 
+   const handleChange = (_: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
+
+    const handlePreferencesSave = (preferences) => {
+    console.log("Préférences enregistrées:", preferences);
+  };
  
   return (
     <Box pt={2} pb={4}>
@@ -96,16 +107,48 @@ const UserProfile: FC = () => {
               </Box>
             </ContentWrapper>
 
-            <StyledTabList>
-              <StyledTab label="Mon profil" value="1" />        
+            <StyledTabList onChange={handleChange}>
+              <StyledTab label="Mon profil" value="1" /> 
+              <StyledTab label="Mes préférences alimentaire" value="2" />
+              <StyledTab label="                " value="3" />
+              <StyledTab label="                " value="4" />
             </StyledTabList>
-
           </FlexBox>
         </StyledCard>
 
         <Box marginTop={3}>
           <StyledTabPanel value="1">
             <Profile />
+          </StyledTabPanel>
+            <StyledTabPanel value="2">
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+            
+              </Grid>
+            
+              <Grid item xs={12} md={12}>
+        <Box style={{ textAlign: "center", marginTop: '20px' }}>
+  <Button 
+    variant="contained" 
+    onClick={() => setIsPreferencesModalOpen(true)}
+    style={{ backgroundColor: "black", color: "white" }}
+  >
+    Gérer les préférences alimentaires
+  </Button>
+</Box>
+
+
+               <PreferencesModal
+          isOpen={isPreferencesModalOpen}
+          onClose={() => setIsPreferencesModalOpen(false)}
+          onSave={handlePreferencesSave}
+        />
+              </Grid>
+              
+              <Grid item xs={12}>
+               
+              </Grid>
+            </Grid>
           </StyledTabPanel>
         </Box>
       </TabContext>

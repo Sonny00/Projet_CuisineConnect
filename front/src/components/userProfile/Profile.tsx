@@ -12,9 +12,13 @@ import useApi from "../../hooks/useApi";
 import { useEffect } from "react";
 
 
+
+
 const Profile: FC = () => {
   const { user } = useAuth();
   const [favorites, setFavorites] = useState([]); 
+  const [preferences, setPreferences] = useState("");
+  
   const api = useApi();
 
 useEffect(() => {
