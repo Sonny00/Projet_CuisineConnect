@@ -126,16 +126,23 @@ const UserProfile: FC = () => {
             
               </Grid>
             
-              <Grid item xs={12} md={12}>
-        <Box style={{ textAlign: "center", marginTop: '20px' }}>
-  <Button 
-    variant="contained" 
-    onClick={() => setIsPreferencesModalOpen(true)}
-    style={{ backgroundColor: "black", color: "white" }}
-  >
-    Gérer les préférences alimentaires
-  </Button>
-</Box>
+    <Grid container spacing={3}>
+    <Grid item xs={12} md={12}>
+      <Box 
+        display="flex" 
+        justifyContent="center" 
+        alignItems="center" 
+        style={{ height: '100%' }}
+      >
+        <Button 
+          variant="contained" 
+          onClick={() => setIsPreferencesModalOpen(true)}
+          style={{ backgroundColor: "black", color: "white" }}
+        >
+          Gérer les préférences alimentaires
+        </Button>
+      </Box>
+
 
 
                <PreferencesModal
@@ -147,6 +154,7 @@ const UserProfile: FC = () => {
               
               <Grid item xs={12}>
                
+              </Grid>
               </Grid>
             </Grid>
           </StyledTabPanel>

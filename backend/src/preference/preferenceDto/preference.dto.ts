@@ -1,6 +1,6 @@
 import { IsArray, IsString } from 'class-validator';
 
-export class CreatePreferenceDto {
+export class PreferenceDto {
   @IsArray()
   @IsString({ each: true })
   allergies: string[];

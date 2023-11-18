@@ -22,17 +22,20 @@ const Profile: FC = () => {
   const api = useApi();
 
 useEffect(() => {
-  const fetchFavorites = async () => {
+  const fetchPreferences = async () => {
     try {
-      const response = await api.getFavoriteRecettes(user?.id);
-      setFavorites(response.data);
+      if (user?.id) {
+        const response = await api.getPreferences(user.id);
+        setPreferences(response.data);
+      }
     } catch (error) {
-      console.error("Erreur lors de la récupération des favoris", error);
+      console.error("Erreur lors de la récupération des préférences", error);
     }
   };
 
-  fetchFavorites();
+  fetchPreferences();
 }, [api, user?.id]);
+
 
 
 

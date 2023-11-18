@@ -1,32 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { Preference } from '@prisma/client';
+import { PreferenceDto } from './preferenceDto/preference.dto';
 
 @Injectable()
 export class PreferenceService {
   constructor(private prisma: PrismaService) {}
 
-  async createPreference(
-    userId: string,
-    allergies: string[],
-    contreIndications: string[],
-  ): Promise<Preference> {
-    const preference = await this.prisma.preference.create({
-      data: {
-        userId,
-        allergies,
-        contreIndications,
-      },
+  async upsertPreferences(userId: string, preferenceDto: PreferenceDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { preferences: true },
     });
-    return preference;
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const preferenceId = user.preferences?.[0]?.id;
+
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        preferences: {
+          upsert: {
+            create: { ...preferenceDto },
+            update: { ...preferenceDto },
+            where: { id: preferenceId || 'some-default-id' },
+          },
+        },
+      },
+      include: { preferences: true },
+    });
   }
 
-  async getPreferenceByUserId(userId: string): Promise<Preference | null> {
-    const preference = await this.prisma.preference.findFirst({
-      where: {
-        userId: userId,
-      },
+  async getPreferences(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { preferences: true },
     });
-    return preference;
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user.preferences;
   }
 }

@@ -180,6 +180,19 @@ function searchBarRecettes(prompt) {
 function getFavoriteRecettes(userId, token = null) {
   return axiosInstance.get(`/users/${userId}/favoris`, token); 
 }
+
+function getPreferences(userId, token = null) {
+  return axiosInstance.get(`/users/${userId}/preferences`, {
+    headers: getRequestHeaders(token),
+  });
+}
+  
+function updatePreferences(userId, preferences) {
+    return axiosInstance.patch(`/users/${userId}/preferences`, preferences, {
+      headers: getRequestHeaders(token, true),
+    });
+  }
+
  
   return {
     login,
@@ -206,5 +219,7 @@ function getFavoriteRecettes(userId, token = null) {
     searchRecettes,
     searchBarRecettes,
     getFavoriteRecettes,
+    updatePreferences,
+    getPreferences,
   };
 }

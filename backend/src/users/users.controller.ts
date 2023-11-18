@@ -26,6 +26,7 @@ import { UpdateUserDto } from './userDto/update-users.dto';
 import { LoggedInUser } from 'src/loggedin-user.decorator';
 import { UpdatePasswordDto } from './userDto/update-password.dto';
 import { BadRequestException } from '@nestjs/common';
+// import { PreferenceDto } from '../preference/preferenceDto/preference.dto';
 
 @Controller('users')
 @UseInterceptors(UsersInterceptor)
@@ -97,4 +98,13 @@ export class UsersController {
     await this.userService.deleteUser(id);
     return 'deleted';
   }
+
+  // @Patch(':id/preferences')
+  // @UseGuards(AuthGuard('jwt'))
+  // updatePreferences(
+  //   @Param('id') userId: string,
+  //   @Body() preferenceDto: PreferenceDto,
+  // ) {
+  //   return this.userService.updatePreferences(userId, preferenceDto);
+  // }
 }

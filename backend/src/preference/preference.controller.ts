@@ -1,34 +1,25 @@
-import { Controller, Post, Body, Param, UseGuards, Get } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport'; // Import AuthGuard
+import { Controller, Get, Patch, Body, Param, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { PreferenceService } from './preference.service';
-import { CreatePreferenceDto } from './preferenceDto/create-preference.dto';
+import { PreferenceDto } from './preferenceDto/preference.dto';
 import { findtheID } from '../users/user.decorator';
 
-@Controller('preferences')
-@UseGuards(AuthGuard('jwt'))
+@Controller('users')
 export class PreferenceController {
   constructor(private readonly preferenceService: PreferenceService) {}
 
-  @Post()
-  async createPreference(
-    @findtheID() userId: string,
-    @Body() createPreferenceDto: CreatePreferenceDto,
+  @Patch(':userId/preferences')
+  @UseGuards(AuthGuard('jwt'))
+  async updatePreferences(
+    @Param('userId') userId: string,
+    @Body() preferenceDto: PreferenceDto,
+    @findtheID() requestUserId: string,
   ) {
-    const { allergies, contreIndications } = createPreferenceDto;
-    const preference = await this.preferenceService.createPreference(
-      userId,
-      allergies,
-      contreIndications,
-    );
-
-    return preference;
+    return this.preferenceService.upsertPreferences(userId, preferenceDto);
   }
 
-  @Get(':userId')
-  async getPreferenceByUserId(@Param('userId') userId: string) {
-    const preference = await this.preferenceService.getPreferenceByUserId(
-      userId,
-    );
-    return preference;
+  @Get(':userId/preferences')
+  async getPreferences(@Param('userId') userId: string) {
+    return this.preferenceService.getPreferences(userId);
   }
 }
