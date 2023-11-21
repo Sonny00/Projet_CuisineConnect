@@ -24,23 +24,23 @@ const Hero: React.FC = () => {
     setIsChatbotVisible((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (searchText) {
-      api
-        .getRecettes()
-        .then((response) => {
-          const filteredRecettes = response.data.filter((recette) =>
-            recette.title.toLowerCase().includes(searchText.toLowerCase())
-          );
-          setSearchResults(filteredRecettes);
-        })
-        .catch((error) => {
-          console.error('Erreur lors de la récupération des recettes', error);
-        });
-    } else {
-      setSearchResults([]);
-    }
-  }, [searchText]);
+ useEffect(() => {
+  if (searchText) {
+    api
+      .getRecettes()
+      .then((response) => {
+      const filteredRecettes = response.data.filter((recette) =>
+  recette.title.toLowerCase().includes(searchText.toLowerCase())
+);
+        setSearchResults(filteredRecettes);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la récupération des recettes', error);
+      });
+  } else {
+    setSearchResults([]);
+  }
+}, [searchText]);
 
   const handleSearch = async (e: FormEvent) => {
     e.preventDefault();

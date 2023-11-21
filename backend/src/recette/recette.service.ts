@@ -129,4 +129,44 @@ export class RecettesService {
       },
     });
   }
+
+  async findByTitles(titles: string[]): Promise<Recette[]> {
+    const recettes = await this.prisma.recette.findMany({
+      where: {
+        OR: titles.map((title) => ({
+          title: {
+            contains: title,
+            mode: 'insensitive',
+          },
+        })),
+      },
+    });
+
+    if (recettes.length === 0) {
+      throw new NotFoundException('Aucune recette correspondante trouvée');
+    }
+
+    return recettes;
+  }
+
+  async findByTitle(titlesString: string): Promise<Recette[]> {
+    const titles = titlesString.split(',').map((title) => title.trim());
+
+    const recettes = await this.prisma.recette.findMany({
+      where: {
+        OR: titles.map((title) => ({
+          title: {
+            contains: title,
+            mode: 'insensitive',
+          },
+        })),
+      },
+    });
+
+    if (recettes.length === 0) {
+      throw new NotFoundException('Aucune recette correspondante trouvée');
+    }
+
+    return recettes;
+  }
 }

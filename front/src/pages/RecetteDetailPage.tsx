@@ -162,8 +162,18 @@ function RecetteDetailPage() {
                 style={{ backgroundColor: "black", color: "white" }}
               >
                 Noter cette recette
+              </Button>{" "}
+                <Button
+                onClick={() => setShowRatingForm(!showRatingForm)}
+                variant="contained"
+                style={{ backgroundColor: "black", color: "white" }}
+              >
+                Proposition d'accompagnement
               </Button>
+
+              
             </div>
+            
           </CardContent>
 
           <Card>

@@ -19,6 +19,7 @@ function Chatbot() {
     ]);
 
     try {
+      setInput('');
       setLoading(true);
       const response = await api.getRecetteSearchAnswer({ message: input });
 
@@ -27,13 +28,12 @@ function Chatbot() {
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: aiMessage, sender: 'chatbot' },
-      ]);
+      ],);
     } catch (error) {
       console.error('Error calling API:', error);
     } finally {
       setLoading(false);
     }
-
     setInput('');
   };
 
@@ -68,6 +68,9 @@ function Chatbot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
+            <div className="loader-container">
+              {loading && <div className="loader"></div>}
+            </div>
             <button id="submit-button" type="submit" disabled={loading}>
               <img className="send-icon" src="send-message.png" alt="" />
             </button>

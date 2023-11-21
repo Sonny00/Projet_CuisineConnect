@@ -1,4 +1,7 @@
 /* Container du chatbot */
+
+*
+
 .chatbot-container {
   width: 300px;
   position: fixed;
@@ -8,6 +11,7 @@
   border: 1px solid #eef1f5;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 10px 10px ;
+  z-index: 1000;
 }
 
 /* Section du chatbot */

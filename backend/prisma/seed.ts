@@ -254,19 +254,6 @@ async function insertRecettes() {
     },
   });
 
-  const recette16 = await prisma.recette.create({
-    data: {
-      title: 'Salade César',
-      description:
-        'Une salade rafraîchissante avec de la laitue, des croûtons, du parmesan et une délicieuse sauce César.',
-      instructions:
-        '1. Lavez et déchirez la laitue en morceaux.\n2. Ajoutez des croûtons, du parmesan râpé et du poulet grillé si vous le souhaitez.\n3. Arrosez de sauce César et mélangez.',
-      ingredients:
-        'Ingrédients :\n- Laitue romaine\n- Croûtons\n- Parmesan râpé\n- Poulet grillé (facultatif)\n- Sauce César',
-      type: 'Entrée',
-    },
-  });
-
   return [
     recette1,
     recette2,
@@ -283,7 +270,6 @@ async function insertRecettes() {
     recette13,
     recette14,
     recette15,
-    recette16,
   ];
 }
 

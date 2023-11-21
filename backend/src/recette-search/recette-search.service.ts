@@ -37,7 +37,26 @@ export class RecetteSearchService {
   }
 
   async getRecetteSearchAnswer(data: answerRecetteInputDTO) {
+    if (!this.isCuisineRelated(data.message)) {
+      return answerRecetteOutputDTO.getInstance(
+        'Je suis spécialisé dans les questions culinaires. Posez-moi une question sur la cuisine !',
+      );
+    }
     return this.getAiModelAnswer(data);
+  }
+
+  private isCuisineRelated(message: string): boolean {
+    // Implémentez une logique pour déterminer si la question est liée à la cuisine
+    // Par exemple, en recherchant des mots-clés spécifiques liés à la cuisine
+    const keywords = [
+      'cuisine',
+      'recette',
+      'cuisiner',
+      'plat',
+      'ingrédient',
+      'gastronomie',
+    ];
+    return keywords.some((keyword) => message.toLowerCase().includes(keyword));
   }
 
   private addMichelinStarChefStyle(message: string): string {
@@ -46,6 +65,8 @@ export class RecetteSearchService {
       L'art du risotto réside dans la lenteur de l'ajout du bouillon, en couches fines, en remuant constamment pour créer une texture crémeuse. 
       Les ingrédients doivent être d'une qualité exceptionnelle, choisis avec soin pour une harmonie de saveurs. 
       N'hésitez pas à ajouter une touche personnelle à chaque plat, c'est là que réside la véritable magie culinaire.
+      Je réponds à toutes vos questions sur la cuisine, les recettes, les ingrédients, les plats, la gastronomie, etc.
+      mais pas à autre en dehors de ce domaine.
     `;
 
     return `${message}\n\n${michelinStarChefStyle}`;

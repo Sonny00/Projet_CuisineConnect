@@ -14,7 +14,7 @@ const SearchResultsPage = () => {
   const { recettes } = location.state || {};
 
   const handleNavigate = (recetteId) => {
-    navigate(`/recette/${recetteId}`); // Mettez à jour le chemin ici
+    navigate(`/recette/${recetteId}`);
   };
 
   
@@ -45,10 +45,10 @@ const SearchResultsPage = () => {
                 variant="contained"
                 style={{
                   marginTop: "10px",
-                  backgroundColor: "black", // Couleur de fond noire
-                  color: "white", // Texte blanc
+                  backgroundColor: "black", 
+                  color: "white", 
                   "&:hover": {
-                    backgroundColor: "black", // Garde la même couleur de fond au survol
+                    backgroundColor: "black",
                   },
                 }}
                 onClick={() => handleNavigate(recette.id)}

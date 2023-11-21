@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import useApi from '../hooks/useApi';
+import React, { useState, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import useApi from "../hooks/useApi";
 
 function RecetteSearchBar() {
-  const [searchText, setSearchText] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const api = useApi();
 
@@ -19,7 +19,7 @@ function RecetteSearchBar() {
           setSearchResults(filteredRecettes);
         })
         .catch((error) => {
-          console.error('Erreur lors de la récupération des recettes', error);
+          console.error("Erreur lors de la récupération des recettes", error);
         });
     } else {
       setSearchResults([]);
@@ -27,16 +27,18 @@ function RecetteSearchBar() {
   }, [searchText]);
 
   return (
-<>
-          <div className='absolute top-0 left-0 w-full h-full bg-gray-900/30'></div>
-          <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center text-center'></div>
-         <h1 className='text-white mb-2'>Bienvenue sur CuisineConnect</h1>
-          <h2 className='text-white mb-4'>Quelle recette souhaitez-vous aujourd'hui ?</h2>
-          
+    <>
+      <div className="absolute top-0 left-0 w-full h-full bg-gray-900/30"></div>
+      <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center text-center"></div>
+      <h1 className="text-white mb-2">Bienvenue sur CuisineConnect</h1>
+      <h2 className="text-white mb-4">
+        Quelle recette souhaitez-vous aujourd'hui ?
+      </h2>
+
       <Autocomplete
         id="recette-search"
         freeSolo
-        options={searchResults.map((recette) => recette.title)}
+        options={searchResults.map((recette) => recette.ingredients)}
         onInputChange={(_, value) => setSearchText(value)}
         renderInput={(params) => (
           <TextField
@@ -47,7 +49,7 @@ function RecetteSearchBar() {
           />
         )}
       />
-</>
+    </>
   );
 }
 

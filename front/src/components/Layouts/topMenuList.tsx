@@ -7,4 +7,4 @@ const index = (role: string) => {
   return common
 }
 
-export default index;
+export default index; 
