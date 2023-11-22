@@ -149,24 +149,29 @@ export class RecettesService {
     return recettes;
   }
 
-  async findByTitle(titlesString: string): Promise<Recette[]> {
-    const titles = titlesString.split(',').map((title) => title.trim());
+ async findByTitle(titlesString: string): Promise<Recette[]> {
+  const titles = titlesString.split(/,|\n/).map(title => title.trim());
+  console.log('Titres recherchés:', titles);
 
-    const recettes = await this.prisma.recette.findMany({
-      where: {
-        OR: titles.map((title) => ({
-          title: {
-            contains: title,
-            mode: 'insensitive',
-          },
-        })),
-      },
-    });
+  const recettes = await this.prisma.recette.findMany({
+    where: {
+      OR: titles.map(title => ({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })),
+    },
+  });
 
-    if (recettes.length === 0) {
-      throw new NotFoundException('Aucune recette correspondante trouvée');
+  const uniqueRecettes = new Map();
+  recettes.forEach(recette => {
+    if (!uniqueRecettes.has(recette.id)) {
+      uniqueRecettes.set(recette.id, recette);
     }
+  });
 
-    return recettes;
-  }
+  return Array.from(uniqueRecettes.values());
+}
+
 }
