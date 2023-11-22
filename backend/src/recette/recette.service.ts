@@ -149,20 +149,19 @@ export class RecettesService {
     return recettes;
   }
 
- async findByTitle(titlesString: string): Promise<Recette[]> {
-  const titles = titlesString.split(/,|\n/).map(title => title.trim());
-  console.log('Titres recherchés:', titles);
-
-  const recettes = await this.prisma.recette.findMany({
-    where: {
-      OR: titles.map(title => ({
-        title: {
-          contains: title,
-          mode: 'insensitive',
-        },
-      })),
-    },
-  });
+  async findByTitle(titlesString: string): Promise<Recette[]> {
+    const titles = titlesString.split(/,|\n/).map(title => title.trim());
+    console.log('Titres recherchés:', titles);
+    const recettes = await this.prisma.recette.findMany({
+      where: {
+        OR: titles.map(title => ({
+          title: {
+            contains: title,
+            mode: 'insensitive',
+          },
+        })),
+      },
+    });
 
   const uniqueRecettes = new Map();
   recettes.forEach(recette => {

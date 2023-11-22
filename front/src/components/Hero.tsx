@@ -1,19 +1,19 @@
-import React, { useState, useEffect, FormEvent } from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import useApi from '../hooks/useApi';
-import LoadingScreen from './LoadingScreen';
-import './HeroStyle.css';
-import { useNavigate } from 'react-router-dom';
-import Chatbot from './Chatbot';
+import React, { useState, useEffect, FormEvent } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import useApi from "../hooks/useApi";
+import LoadingScreen from "./LoadingScreen";
+import "./HeroStyle.css";
+import { useNavigate } from "react-router-dom";
+import Chatbot from "./Chatbot";
 
 const Hero: React.FC = () => {
   const { getRecetteByTitle } = useApi();
   const { searchBarRecettes } = useApi();
-  const [inputData, setInputData] = useState<string>('');
-  const [searchResult, setSearchResult] = useState<string>('');
+  const [inputData, setInputData] = useState<string>("");
+  const [searchResult, setSearchResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [searchText, setSearchText] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);
 
@@ -24,23 +24,23 @@ const Hero: React.FC = () => {
     setIsChatbotVisible((prev) => !prev);
   };
 
- useEffect(() => {
-  if (searchText) {
-    api
-      .getRecettes()
-      .then((response) => {
-      const filteredRecettes = response.data.filter((recette) =>
-  recette.title.toLowerCase().includes(searchText.toLowerCase())
-);
-        setSearchResults(filteredRecettes);
-      })
-      .catch((error) => {
-        console.error('Erreur lors de la récupération des recettes', error);
-      });
-  } else {
-    setSearchResults([]);
-  }
-}, [searchText]);
+  useEffect(() => {
+    if (searchText) {
+      api
+        .getRecettes()
+        .then((response) => {
+          const filteredRecettes = response.data.filter((recette) =>
+            recette.title.toLowerCase().includes(searchText.toLowerCase())
+          );
+          setSearchResults(filteredRecettes);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération des recettes", error);
+        });
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchText]);
 
   const handleSearch = async (e: FormEvent) => {
     e.preventDefault();
@@ -48,9 +48,9 @@ const Hero: React.FC = () => {
     try {
       setLoading(true);
       const response = await searchBarRecettes(inputData);
-      navigate('/search-results', { state: { recettes: response.data } });
+      navigate("/search-results", { state: { recettes: response.data } });
     } catch (error) {
-      console.error('Erreur lors de la recherche des recettes', error);
+      console.error("Erreur lors de la recherche des recettes", error);
     } finally {
       setLoading(false);
     }
@@ -58,18 +58,24 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <div className='absolute top-0 left-0 w-full h-full' style={{
-  backgroundImage: 'url(https://as1.ftcdn.net/v2/jpg/04/97/45/38/1000_F_497453879_CoPFJDklwqFUWdGzu6WTpwch2GKLPyue.jpg)', // Remplacez "background.jpg" par le chemin de votre image
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-  opacity: 1,
-}}> </div>
-      <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center text-center'>
-        <h1 className='text-white mb-2' style={{ fontSize: '20px' }}>
+      <div
+        className="absolute top-0 left-0 w-full h-full"
+        style={{
+          backgroundImage:
+            "url(https://as1.ftcdn.net/v2/jpg/04/97/45/38/1000_F_497453879_CoPFJDklwqFUWdGzu6WTpwch2GKLPyue.jpg)", // Remplacez "background.jpg" par le chemin de votre image
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          opacity: 1,
+        }}
+      >
+        {" "}
+      </div>
+      <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center text-center">
+        <h1 className="text-white mb-2" style={{ fontSize: "20px" }}>
           Bienvenue sur CuisineConnect
         </h1>
-        <h2 className='text-white mb-4' style={{ fontSize: '13px' }}>
+        <h2 className="text-white mb-4" style={{ fontSize: "13px" }}>
           Quelle recette souhaitez-vous aujourd'hui ?
         </h2>
 
@@ -77,14 +83,23 @@ const Hero: React.FC = () => {
 
         <form
           onSubmit={handleSearch}
-          className='flex border p-1 rounded-md text-black bg-gray-100/90 max-w-[700px] w-[80%] mx-auto'
+          className="flex border p-1 rounded-md text-black bg-gray-100/90 max-w-[700px] w-[80%] mx-auto"
         >
-          <Autocomplete
+         <Autocomplete
             style={{ width: '100%' }}
             id='recette-search'
             freeSolo
             options={searchResults.map((recette) => recette.title)}
             onInputChange={(_, value) => setSearchText(value)}
+            onChange={(_, value) => {
+    // Trouver la recette correspondant au titre sélectionné
+    const selectedRecette = searchResults.find(recette => recette.title === value);
+    if (selectedRecette) {
+      // Naviguer vers la page de détail de la recette
+      navigate(`/recette/${selectedRecette.id}`); // Assurez-vous que cette route existe dans votre application
+    }
+  }}
+            
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -98,19 +113,20 @@ const Hero: React.FC = () => {
           />
         </form>
 
-<button
+        <button
           onClick={toggleChatbot}
-  className='fixed bottom-4 left-1/2 bg-black-500 text-white px-4 py-2 rounded-md cursor-pointer transform -translate-x-1/2'
+          className="fixed bottom-4 left-1/2 bg-black-500 text-white px-4 py-2 rounded-md cursor-pointer transform -translate-x-1/2"
         >
           Ouvrir le Chatbot
         </button>
 
         {loading && <LoadingScreen />}
         {searchResult && (
-          <div style={{ color: 'white', marginTop: '20px' }}>{searchResult}</div>
+          <div style={{ color: "white", marginTop: "20px" }}>
+            {searchResult}
+          </div>
         )}
       </div>
-      
     </>
   );
 };

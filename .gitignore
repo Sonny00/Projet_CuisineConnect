@@ -1,7 +1,8 @@
 node_modules
-# Keep environment variables out of version control
 
 .vscode
 .DS_Store
 .env
 front/vite.config.js
+backend/.env
+front/.env

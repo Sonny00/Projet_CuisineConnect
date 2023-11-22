@@ -10,6 +10,7 @@ import {
   TextField,
   Container,
 } from "@mui/material";
+import dotenv from "dotenv"; 
 
 function RecetteDetailPage() {
   const { title } = useParams<{ title: string }>();
@@ -21,6 +22,9 @@ function RecetteDetailPage() {
   const [showRatingForm, setShowRatingForm] = useState(false);
   const [commentaires, setCommentaires] = useState([]);
   const [accompagnements, setAccompagnements] = useState<string | null>(null); // Utilisez un état pour stocker les suggestions d'accompagnement
+  const [listeDeCourses, setListeDeCourses] = useState('');
+const listeDeCoursesItems = listeDeCourses.split("\n").filter(item => item);
+
 
   const navigate = useNavigate();
 
@@ -126,9 +130,9 @@ function RecetteDetailPage() {
 };
 
     const handleGenerateAccompagnements = async () => {
-    const apiKey = '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';
+    const apiKey = import.meta.env.VITE_API_KEY;
     const recetteTitle = recette.title;
-    const prompt = `Générez des suggestions d'accompagnements pour la recette "${recetteTitle}"`;
+    const prompt = `Générez des suggestions d'accompagnements pour la recette "${recetteTitle}, en Français"`;
     const maxTokens = 50;
 
     try {
@@ -148,14 +152,62 @@ function RecetteDetailPage() {
         const data = await response.json();
         const generatedText = data.choices[0].text;
         console.log('Suggestions d\'accompagnements générées :', generatedText);
-        setAccompagnements(generatedText); // Mettez à jour l'état avec les suggestions générées
-      } else {
+        setAccompagnements(generatedText); 
         console.error('Erreur lors de la requête à l\'API GPT-3');
       }
     } catch (error) {
       console.error('Erreur lors de la génération des accompagnements', error);
     }
   };
+
+
+  const handleGenerateListeDeCourse = async () => {
+  const apiKey = import.meta.env.VITE_API_KEY;
+  const ingredients = recette.ingredients; 
+  const prompt = `Générez une liste de courses pour la recette "${recette.title}" avec les ingrédients suivants: ${ingredients}`;
+  const maxTokens = 100;
+
+  try {
+    const response = await fetch('https://api.openai.com/v1/engines/text-davinci-003/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        prompt,
+        max_tokens: maxTokens,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const generatedText = data.choices[0].text;
+      console.log('Liste de courses générée :', generatedText);
+      setListeDeCourses(generatedText); // Mettez à jour l'état ici
+    } else {
+      console.error('Erreur lors de la requête à l\'API GPT-3');
+    }
+  } catch (error) {
+    console.error('Erreur lors de la génération de la liste de courses', error);
+  }
+  };
+  
+const handleCopyToClipboard = () => {
+  navigator.clipboard.writeText(listeDeCourses)
+    .then(() => alert("Liste de courses copiée dans le presse-papier!"))
+    .catch(err => console.error("Erreur lors de la copie", err));
+};
+
+  const handleShareOnTwitter = () => {
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(listeDeCourses)}`;
+  window.open(twitterUrl, '_blank');
+};
+const handleShareByEmail = () => {
+  const mailto = `mailto:?subject=Liste de Courses&body=${encodeURIComponent(listeDeCourses)}`;
+  window.open(mailto, '_blank');
+};
+
 
 
   return (
@@ -199,7 +251,14 @@ function RecetteDetailPage() {
                 style={{ backgroundColor: "black", color: "white" }}
               >
                 Proposition d'accompagnement
-              </Button>
+              </Button>{" "}
+                 <Button
+                onClick={() =>  handleGenerateListeDeCourse()}
+                variant="contained"
+                style={{ backgroundColor: "black", color: "white" }}
+              >
+               Course
+              </Button>{""}
 
               
             </div>
@@ -225,6 +284,30 @@ function RecetteDetailPage() {
               <Typography color="black">{recette.ingredients}</Typography>
             </CardContent>
           </Card>
+
+          <Card>
+        <CardContent>
+          <Typography variant="h5" component="div">
+            Liste de Courses
+              </Typography>
+              <Typography variant="body2">
+    {listeDeCourses}
+  </Typography>
+                 <ul>
+            {listeDeCoursesItems.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={handleCopyToClipboard}>Copier</Button>
+          <Button size="small" onClick={handleShareOnTwitter}>Twitter</Button>
+          <Button size="small" onClick={handleShareByEmail}>Email</Button>
+          {/* Autres boutons de partage */}
+        </CardActions>
+      </Card>
+
+          
           
           
 
