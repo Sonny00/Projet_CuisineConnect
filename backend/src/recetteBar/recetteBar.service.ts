@@ -81,4 +81,6 @@ export class RechercheBarService {
     ]; // etc.
     return commonIngredients.includes(word.toLowerCase());
   }
+
+  
 }

@@ -20,6 +20,8 @@ function RecetteDetailPage() {
   const [userRating, setUserRating] = useState(0);
   const [showRatingForm, setShowRatingForm] = useState(false);
   const [commentaires, setCommentaires] = useState([]);
+  const [accompagnements, setAccompagnements] = useState<string | null>(null); // Utilisez un état pour stocker les suggestions d'accompagnement
+
   const navigate = useNavigate();
 
      useEffect(() => {
@@ -123,10 +125,38 @@ function RecetteDetailPage() {
   }
 };
 
-        
-   
+    const handleGenerateAccompagnements = async () => {
+    const apiKey = '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';
+    const recetteTitle = recette.title;
+    const prompt = `Générez des suggestions d'accompagnements pour la recette "${recetteTitle}"`;
+    const maxTokens = 50;
 
- 
+    try {
+      const response = await fetch('https://api.openai.com/v1/engines/text-davinci-002/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          prompt,
+          max_tokens: maxTokens,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const generatedText = data.choices[0].text;
+        console.log('Suggestions d\'accompagnements générées :', generatedText);
+        setAccompagnements(generatedText); // Mettez à jour l'état avec les suggestions générées
+      } else {
+        console.error('Erreur lors de la requête à l\'API GPT-3');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la génération des accompagnements', error);
+    }
+  };
+
 
   return (
     
@@ -164,7 +194,7 @@ function RecetteDetailPage() {
                 Noter cette recette
               </Button>{" "}
                 <Button
-                onClick={() => setShowRatingForm(!showRatingForm)}
+                onClick={() =>  handleGenerateAccompagnements()}
                 variant="contained"
                 style={{ backgroundColor: "black", color: "white" }}
               >
@@ -185,6 +215,8 @@ function RecetteDetailPage() {
             </CardContent>
           </Card>
 
+           
+
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -193,6 +225,8 @@ function RecetteDetailPage() {
               <Typography color="black">{recette.ingredients}</Typography>
             </CardContent>
           </Card>
+          
+          
 
           <Card>
             <CardContent>
@@ -202,6 +236,17 @@ function RecetteDetailPage() {
               <Typography color="black">{recette.instructions}</Typography>
             </CardContent>
           </Card>
+           
+          {accompagnements && (
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Accompagnements Suggérés
+                </Typography>
+                <Typography color="black">{accompagnements}</Typography>
+              </CardContent>
+            </Card>
+          )}
 
           {showRatingForm ? (
             <div>
