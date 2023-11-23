@@ -36,7 +36,7 @@ export class RechercheBarService {
       return recette || 'Aucune recette correspondante trouvée.';
     } catch (error) {
       //eslint-disable-next-line
-    console.error(
+      console.error(
         "Erreur lors de l'appel à OpenAI ou de la recherche dans la BD:",
         error,
       );
@@ -82,5 +82,36 @@ export class RechercheBarService {
     return commonIngredients.includes(word.toLowerCase());
   }
 
-  
+  async getSimilarRecipesFromPrompt(prompt: string): Promise<any> {
+    try {
+      const response = await this.openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content:
+              "'Poulet au citron et à l'ail','Spaghetti Carbonara','Salade César','Ratatouille','Tarte aux pommes','Sushi au Saumon','Curry de Poulet','Salade de Quinoa','Tacos au Bœuf','Gâteau au chocolat','Tiramisu','Tarte aux fraises','Salade de fruits','Salade de pommes de terre','Salade de pâtes', ce sont les recettes que tu as en mémoire Tu ne dois jamais répondre par autre chose que ces titres de recettes. Tu es une barre de recherche je vais te demander en fonction du titre d'une recette les recettes similaires parmis celle que tu as en mémoire, tu peux te baser sur les ingrédients, mais tu dois me donner uniquement le nom de la recette ou des recettes qui correspondent à la demande, tu n'as que ces recettes en mémoire et rien d'autre :'Poulet au citron et à l'ail','Spaghetti Carbonara','Salade César','Ratatouille','Tarte aux pommes','Sushi au Saumon','Curry de Poulet','Salade de Quinoa','Tacos au Bœuf','Gâteau au chocolat','Tiramisu','Tarte aux fraises','Salade de fruits','Salade de pommes de terre','Salade de pâtes', Si je pose une question qui n'a pas de lien avec la cuisine de près ou de loin, tu ne réponds pas en expliquant que tu n'est pas habilité pour répondre à des questions qui n'ont pas de lien avec la cuisine, tu as le droit de répondre uniquement avec le nom des recettes que tu as en mémoire rien d'autre, tu ne dois pas faire de phrase, tu ne dois jamais faire de phrase. Tu dois répondre UNIQUEMENT par les recettes correspondantes que tu as en mémoire en fonction de la demande.",
+          },
+          { role: 'system', content: prompt },
+        ],
+      });
+
+      const generatedMessage = response.choices[0].message.content;
+      // eslint-disable-next-line
+      console.log('Contenu du message généré :', generatedMessage);
+      if (!response.choices) {
+        throw new Error("La réponse de l'API OpenAI ne contient pas de choix.");
+      }
+      // Recherchez directement la recette par son titre
+      const recette = await this.recettesService.findByTitle(generatedMessage);
+      return recette || 'Aucune recette correspondante trouvée.';
+    } catch (error) {
+      //eslint-disable-next-line
+      console.error(
+        "Erreur lors de l'appel à OpenAI ou de la recherche dans la BD:",
+        error,
+      );
+      throw error;
+    }
+  }
 }
