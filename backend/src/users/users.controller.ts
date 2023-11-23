@@ -30,17 +30,18 @@ import { BadRequestException } from '@nestjs/common';
 
 @Controller('users')
 @UseInterceptors(UsersInterceptor)
-@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles(UserRole.ADMIN)
   async getUsers(@Query() query): Promise<User[]> {
     return this.userService.getUsers(query);
   }
 
   @Get('/users-only')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   // @Roles(UserRole.ADMIN)
   async getUsersOnly(@Query() query): Promise<User[]> {
     const allUsers = this.userService.getUsers(query);
@@ -48,11 +49,13 @@ export class UsersController {
   }
 
   @Get('current')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   async getLoggedinUser(@LoggedInUser() user: User) {
     return user;
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @UseGuards(OwnerOrAdminGuard)
   @IsOwnerOrAdmin(Entities.USER)
   async getUserById(@Param('id') id: string): Promise<User | null> {
@@ -73,6 +76,7 @@ export class UsersController {
 
   @Patch(':id')
   @UseGuards(OwnerOrAdminGuard)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @IsOwnerOrAdmin(Entities.USER)
   async updateUser(
     @Param('id') id: string,
@@ -83,6 +87,7 @@ export class UsersController {
 
   @Patch('updatePassword/:id')
   @UseGuards(OwnerOrAdminGuard)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @IsOwnerOrAdmin(Entities.USER)
   async updatePassword(
     @Param('id') id: string,
@@ -93,6 +98,7 @@ export class UsersController {
 
   @Delete(':id')
   @UseGuards(OwnerOrAdminGuard)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @IsOwnerOrAdmin(Entities.USER)
   async deleteUser(@Param('id') id: string): Promise<string> {
     await this.userService.deleteUser(id);
