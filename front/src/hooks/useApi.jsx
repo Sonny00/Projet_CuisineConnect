@@ -180,7 +180,11 @@ function searchRecettes(prompt) {
  
 function searchBarRecettes(prompt) {
   return apiClient.post('/recherche-bar/search', { prompt }, token);
-  }
+}
+  
+ function getSimilarRecipes(prompt) {
+  return apiClient.post(`recherche-bar/similar`, { prompt }, token);
+}
 
 function getFavoriteRecettes(userId, token = null) {
   return axiosInstance.get(`/users/${userId}/favoris`, token); 
@@ -227,5 +231,6 @@ function updatePreferences(userId, preferences) {
     updatePreferences,
     getPreferences,
     getNotesByRecetteId,
+    getSimilarRecipes,
   };
 }

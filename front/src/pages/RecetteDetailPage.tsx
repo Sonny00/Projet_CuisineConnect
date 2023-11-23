@@ -25,7 +25,10 @@ function RecetteDetailPage() {
   const [listeDeCourses, setListeDeCourses] = useState("");
   const listeDeCoursesItems = listeDeCourses.split("\n").filter((item) => item);
   const [notes, setNotes] = useState([]);
+  const [recetteSimilaires, setRecetteSimilaires] = useState([]);
+  const { getSimilarRecipes } = useApi();
 
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,19 +36,25 @@ function RecetteDetailPage() {
 
     const fetchData = async () => {
       try {
-        const [recetteResponse, commentairesResponse, notesResponse] =
+
+        const [recetteResponse, commentairesResponse, notesResponse,] =
           await Promise.all([
             api.getRecette(title),
             api.getCommentaires(title),
             api.getNotesByRecetteId(title),
+            //api.getSimilarRecipes(title)
             // api.getFavoriteRecettes() // Assurez-vous que cette fonction existe et fonctionne correctement
           ]);
 
         if (mounted) {
+          //const response = await api.getSimilarRecipes(title);
           setRecette(recetteResponse.data);
           setCommentaires(commentairesResponse.data);
           setFavorite(recetteResponse.data.favorite);
           setNotes(notesResponse.data);
+   
+          
+          
         }
       } catch (error) {
         console.error("Erreur lors de la récupération des données", error);
@@ -134,6 +143,20 @@ function RecetteDetailPage() {
         });
     }
   };
+  
+  
+  const handleFindSimilarRecipes = async () => {
+  try {
+    const response = await api.getSimilarRecipes(recette.title); // Remplacez 'title' par le titre de la recette actuelle
+    
+    setRecetteSimilaires(response.data); // Met à jour l'état avec les recettes similaires
+  } catch (error) {
+    console.error("Erreur lors de la récupération des recettes similaires", error);
+    console.log(typeof recette.title);
+  
+  }
+};
+
 
   const handleGenerateAccompagnements = async () => {
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -239,12 +262,11 @@ function RecetteDetailPage() {
           }
 
           .note-container {
-  width: 100%;
-  height: 20px;
-  margin-bottom: 50px; /* Espace entre les notes */
-  text-align: center;
-  /* autres styles si nécessaire */
-}
+          width: 100%;
+          height: 20px;
+          margin-bottom: 30px; /* Espace entre les notes */
+          text-align: center;
+        }
         `}
       </style>
 
@@ -381,7 +403,31 @@ function RecetteDetailPage() {
                 <Typography color="black">{recette.ingredients}</Typography>
               </CardContent>
             </Card>
-
+            <Card>
+  <CardContent>
+    <Typography variant="h6" gutterBottom>
+      Recettes Similaires
+                </Typography>
+         
+  <ul style={{ color: 'blue', fontWeight: 'bold' }}>
+    {recetteSimilaires.map((similaire, index) => (
+      <li key={index}>
+        <a href={`/recette/${similaire.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+        {similaire.title}
+        </a>
+      </li>
+    ))}
+                </ul>
+                
+  <Button
+  onClick={handleFindSimilarRecipes}
+  variant="contained"
+  style={{ backgroundColor: "black", color: "white", marginTop : "20px" }}
+>
+  Afficher les recettes similaires
+</Button>
+  </CardContent>
+</Card>
             {showRatingForm ? (
               <div>
                 <p>Donnez une note :</p>
@@ -416,6 +462,7 @@ function RecetteDetailPage() {
                 onChange={(e) => setComment(e.target.value)}
               />
             </CardContent>
+            
 
             <CardActions>
               <Button
