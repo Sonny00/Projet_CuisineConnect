@@ -54,4 +54,15 @@ export class NoteService {
       where: { id: noteId },
     });
   }
+
+  // Dans votre NoteService
+
+  async findNotesByRecetteId(recetteId: string): Promise<Note[]> {
+    const notes = await this.prisma.note.findMany({
+      where: {
+        recetteId: recetteId,
+      },
+    });
+    return notes;
+  }
 }

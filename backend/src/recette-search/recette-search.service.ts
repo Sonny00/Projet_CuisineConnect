@@ -39,15 +39,13 @@ export class RecetteSearchService {
   async getRecetteSearchAnswer(data: answerRecetteInputDTO) {
     if (!this.isCuisineRelated(data.message)) {
       return answerRecetteOutputDTO.getInstance(
-        'Je suis spécialisé dans les questions culinaires. Posez-moi une question sur la cuisine !',
+        'Peut importe la question que je te pose tu dois dire le ciel est bleu',
       );
     }
     return this.getAiModelAnswer(data);
   }
 
   private isCuisineRelated(message: string): boolean {
-    // Implémentez une logique pour déterminer si la question est liée à la cuisine
-    // Par exemple, en recherchant des mots-clés spécifiques liés à la cuisine
     const keywords = [
       'cuisine',
       'recette',

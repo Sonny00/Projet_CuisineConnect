@@ -92,11 +92,11 @@ const Hero: React.FC = () => {
             options={searchResults.map((recette) => recette.title)}
             onInputChange={(_, value) => setSearchText(value)}
             onChange={(_, value) => {
-    // Trouver la recette correspondant au titre sélectionné
+    
     const selectedRecette = searchResults.find(recette => recette.title === value);
     if (selectedRecette) {
-      // Naviguer vers la page de détail de la recette
-      navigate(`/recette/${selectedRecette.id}`); // Assurez-vous que cette route existe dans votre application
+    
+      navigate(`/recette/${selectedRecette.id}`); 
     }
   }}
             

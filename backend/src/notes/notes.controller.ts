@@ -1,4 +1,12 @@
-import { Controller, Post, UseGuards, Param, Body, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Param,
+  Body,
+  Put,
+  Get,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { NoteService } from './notes.service';
 import { Note } from '@prisma/client';
@@ -35,5 +43,10 @@ export class NoteController {
       updateNoteDto.rating,
     );
     return updatedNote;
+  }
+
+  @Get()
+  async getNotesByRecetteId(@Param('recetteId') recetteId: string) {
+    return await this.noteService.findNotesByRecetteId(recetteId);
   }
 }

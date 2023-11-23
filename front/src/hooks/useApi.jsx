@@ -169,6 +169,11 @@ function deleteNote(noteId) {
   return apiClient.delete(`notes/${noteId}`, token);
 }
 
+function getNotesByRecetteId(recetteId) {
+  return apiClient.get(`recettes/${recetteId}/notes`, token);
+}
+
+  
 function searchRecettes(prompt) {
   return apiClient.post('/search', { prompt }, token);
 }
@@ -221,5 +226,6 @@ function updatePreferences(userId, preferences) {
     getFavoriteRecettes,
     updatePreferences,
     getPreferences,
+    getNotesByRecetteId,
   };
 }
