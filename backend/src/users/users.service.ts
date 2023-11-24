@@ -9,12 +9,11 @@ import { CreateUserDto } from './userDto/users.dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './userDto/update-users.dto';
 import { UpdatePasswordDto } from './userDto/update-password.dto';
+// import { PreferenceDto } from '../preference/preferenceDto/preference.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private prisma: PrismaService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async create(data: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -35,7 +34,7 @@ export class UsersService {
     return this.prisma.user.findUnique({
       where: {
         id: id,
-      }
+      },
     });
   }
 
@@ -60,7 +59,7 @@ export class UsersService {
     const users = await this.prisma.user.findMany({
       orderBy: {
         firstname: 'desc',
-      }
+      },
     });
     return users;
   }

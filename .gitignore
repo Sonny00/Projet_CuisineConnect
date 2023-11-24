@@ -1,0 +1,8 @@
+node_modules
+
+.vscode
+.DS_Store
+.env
+front/vite.config.js
+backend/.env
+front/.env

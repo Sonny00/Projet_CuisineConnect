@@ -12,17 +12,55 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  email     String  @unique
-  password  String?
-  role      Role    @default(USER)
-  firstname String
-  lastname  String
+  id          String        @id @default(uuid())
+  email       String        @unique
+  password    String?
+  role        Role          @default(USER)
+  firstname   String
+  lastname    String
+  favorites   Recette[]     @relation("UserFavorites")
+  Commentaire Commentaire[]
+  notes       Note[]
+  preferences Preference[]
 }
 
-model Favoris {
-  id   String @id @default(uuid())
-  text String
+model Recette {
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  instructions String?
+  ingredients  String?
+  type         String?
+  Commentaire  Commentaire[]
+  favorites    User[]        @relation("UserFavorites")
+  notes        Note[]
+}
+
+model Commentaire {
+  id         String   @id @default(uuid())
+  userId     String
+  recetteId  String
+  text       String
+  user       User     @relation(fields: [userId], references: [id])
+  recette    Recette  @relation(fields: [recetteId], references: [id])
+  created_at DateTime @default(now())
+}
+
+model Note {
+  id        String  @id @default(uuid())
+  userId    String
+  recetteId String
+  rating    Int
+  user      User    @relation(fields: [userId], references: [id])
+  recette   Recette @relation(fields: [recetteId], references: [id])
+}
+
+model Preference {
+  id                String   @id @default(uuid())
+  userId            String
+  allergies         String[]
+  contreIndications String[]
+  user              User     @relation(fields: [userId], references: [id])
 }
 
 enum Role {
