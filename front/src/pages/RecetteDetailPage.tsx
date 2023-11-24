@@ -417,8 +417,8 @@ function RecetteDetailPage() {
         </a>
       </li>
     ))}
-                </ul>
-                
+  </ul>
+  
   <Button
   onClick={handleFindSimilarRecipes}
   variant="contained"

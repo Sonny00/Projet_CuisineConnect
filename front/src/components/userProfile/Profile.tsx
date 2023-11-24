@@ -22,18 +22,23 @@ const Profile: FC = () => {
   const api = useApi();
 
 useEffect(() => {
-  const fetchPreferences = async () => {
+  const fetchData = async () => {
     try {
       if (user?.id) {
-        const response = await api.getPreferences(user.id);
-        setPreferences(response.data);
+        const [preferencesResponse, favoritesResponse] = await Promise.all([
+          api.getPreferences(user.id),
+          api.getFavoriteRecettes(user.id)
+        ]);
+
+        setPreferences(preferencesResponse.data);
+        setFavorites(favoritesResponse.data); 
       }
     } catch (error) {
-      console.error("Erreur lors de la récupération des préférences", error);
+      console.error("Erreur lors de la récupération des données", error);
     }
   };
 
-  fetchPreferences();
+  fetchData();
 }, [api, user?.id]);
 
 
@@ -54,7 +59,6 @@ useEffect(() => {
                         comme le titre et la description de la recette */}
                     <Box padding={2}>
                       <H6>{fav.title}</H6>
-                      <Small color="text.secondary">{fav.description}</Small>
                     </Box>
                   </Card>
                 </Grid>
