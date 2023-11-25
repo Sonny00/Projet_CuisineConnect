@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './userDto/update-users.dto';
 import { UpdatePasswordDto } from './userDto/update-password.dto';
 // import { PreferenceDto } from '../preference/preferenceDto/preference.dto';
+import { Recette } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -112,4 +113,30 @@ export class UsersService {
     });
     return 'deleted';
   }
+
+  async findUserFavorites(userId: string): Promise<Recette[]> {
+    const userWithFavorites = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        favorites: true, // Inclure les recettes favorites
+      },
+    });
+
+    if (!userWithFavorites) {
+      throw new NotFoundException('User not found');
+    }
+    return userWithFavorites.favorites;
+  }
+
+ async removeFavoriteFromUser(userId: string, recetteId: string): Promise<any> {
+  return this.prisma.user.update({
+    where: { id: userId },
+    data: {
+      favorites: {
+        disconnect: [{ id: recetteId }],
+      },
+    },
+  });
+}
+  
 }

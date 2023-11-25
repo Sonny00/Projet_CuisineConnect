@@ -105,6 +105,19 @@ export class UsersController {
     return 'deleted';
   }
 
+  @Get(':id/favorites')
+  async findUserFavorites(@Param('id') userId: string) {
+    return this.userService.findUserFavorites(userId);
+  }
+
+  @Delete(':userId/favorites/:recetteId')
+  async removeFavorite(
+    @Param('userId') userId: string,
+    @Param('recetteId') recetteId: string,
+  ) {
+    return this.userService.removeFavoriteFromUser(userId, recetteId);
+  }
+
   // @Patch(':id/preferences')
   // @UseGuards(AuthGuard('jwt'))
   // updatePreferences(

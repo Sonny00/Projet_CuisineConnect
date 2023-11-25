@@ -151,6 +151,7 @@ export class RecettesService {
 
   async findByTitle(titlesString: string): Promise<Recette[]> {
     const titles = titlesString.split(/,|\n/).map(title => title.trim());
+    // eslint-disable-next-line no-console
     console.log('Titres recherchés:', titles);
     const recettes = await this.prisma.recette.findMany({
       where: {
@@ -163,14 +164,13 @@ export class RecettesService {
       },
     });
 
-  const uniqueRecettes = new Map();
-  recettes.forEach(recette => {
-    if (!uniqueRecettes.has(recette.id)) {
-      uniqueRecettes.set(recette.id, recette);
-    }
-  });
+    const uniqueRecettes = new Map();
+    recettes.forEach((recette) => {
+      if (!uniqueRecettes.has(recette.id)) {
+        uniqueRecettes.set(recette.id, recette);
+      }
+    });
 
-  return Array.from(uniqueRecettes.values());
-}
-
+    return Array.from(uniqueRecettes.values());
+  }
 }

@@ -11,6 +11,7 @@ import {
   Container,
 } from "@mui/material";
 import dotenv from "dotenv";
+import useAuth from "../hooks/useAuth";
 
 function RecetteDetailPage() {
   const { title } = useParams<{ title: string }>();
@@ -27,6 +28,8 @@ function RecetteDetailPage() {
   const [notes, setNotes] = useState([]);
   const [recetteSimilaires, setRecetteSimilaires] = useState([]);
   const { getSimilarRecipes } = useApi();
+  const { getUserFavorites } = useApi();
+  const { user } = useAuth();
 
   
   const navigate = useNavigate();
@@ -42,6 +45,10 @@ function RecetteDetailPage() {
             api.getRecette(title),
             api.getCommentaires(title),
             api.getNotesByRecetteId(title),
+          
+
+          
+
             //api.getSimilarRecipes(title)
             // api.getFavoriteRecettes() // Assurez-vous que cette fonction existe et fonctionne correctement
           ]);
@@ -52,8 +59,14 @@ function RecetteDetailPage() {
           setCommentaires(commentairesResponse.data);
           setFavorite(recetteResponse.data.favorite);
           setNotes(notesResponse.data);
-   
           
+
+        const userId = user?.id;
+        const userFavorites = await api.getUserFavorites(userId);
+        const isFavorite = Array.isArray(userFavorites) && userFavorites.some(favRecette => favRecette.id === recetteResponse.data.id);
+        setFavorite(isFavorite);
+
+
           
         }
       } catch (error) {
@@ -67,6 +80,42 @@ function RecetteDetailPage() {
       mounted = false;
     };
   }, [title, api]);
+
+  useEffect(() => {
+  // Charger les détails de la recette
+  const loadRecetteDetails = async () => {
+    try {
+      const recetteResponse = await api.getRecette(title);
+      setRecette(recetteResponse.data);
+      // autres états à définir
+    } catch (error) {
+      console.error("Erreur lors de la récupération des détails de la recette", error);
+    }
+  };
+
+  loadRecetteDetails();
+}, [title, api]); // Dépendances : title et api
+
+useEffect(() => {
+  // Vérifier si la recette est dans les favoris
+  const checkIfFavorite = async () => {
+    try {
+      const userId = user?.id;
+      if (userId) {
+        const userFavorites = await api.getUserFavorites(userId);
+        const isFavorite = userFavorites.some(favRecette => favRecette.id === recette?.id);
+        setFavorite(isFavorite);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la vérification des favoris", error);
+    }
+  };
+
+  if (recette) {
+    checkIfFavorite();
+  }
+}, [user, recette]); // Dépendances : user et recette
+
 
   // useEffect(() => {
   //   let intervalId;
@@ -116,33 +165,32 @@ function RecetteDetailPage() {
     navigate("/");
   };
 
-  const handleToggleFavorite = () => {
-    if (favorite) {
-      api
-        .removeFavorite(recette.id)
-        .then(() => {
-          setFavorite(false);
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de la suppression de la recette des favoris",
-            error
-          );
-        });
-    } else {
-      api
-        .addFavorite(recette.id)
-        .then(() => {
-          setFavorite(true);
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de l'ajout de la recette aux favoris",
-            error
-          );
-        });
+ const handleToggleFavorite = async () => {
+  try {
+    const userId = user?.id; // Assurez-vous que l'ID de l'utilisateur est correctement récupéré
+    const recetteId = recette?.id; // Assurez-vous que l'ID de la recette est correctement récupéré
+
+    if (!userId || !recetteId) {
+      console.error("ID utilisateur ou recette manquant");
+      return;
     }
-  };
+
+    if (favorite) {
+      await api.removeFavorite(userId, recetteId); // Utilisation de la nouvelle signature de fonction
+      setFavorite(false);
+    } else {
+      await api.addFavorite(recetteId); // Assurez-vous que cette méthode est également correcte
+      setFavorite(true);
+    }
+
+    // Recharger les données de la recette pourrait ne pas être nécessaire si vous mettez à jour l'état localement
+    // fetchData(); 
+
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour des favoris", error);
+  }
+};
+
   
   
   const handleFindSimilarRecipes = async () => {
@@ -296,16 +344,15 @@ function RecetteDetailPage() {
                     {/* Vous pouvez ajouter plus de détails ici si nécessaire */}
                   </div>
                 ))}
-                <Button
-                  onClick={handleToggleFavorite}
-                  variant="contained"
-                  style={{
-                    backgroundColor: favorite ? "black" : "black",
-                    color: "white",
-                  }}
-                >
-                  {favorite ? "Retirer des favoris" : "Ajouter aux favoris"}
-                </Button>{" "}
+       <Button
+  onClick={handleToggleFavorite}
+  variant="contained"
+  style={{ backgroundColor: "black", color: "white" }}
+>
+  {favorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+</Button>
+
+{" "}
                 <Button
                   onClick={() => setShowRatingForm(!showRatingForm)}
                   variant="contained"

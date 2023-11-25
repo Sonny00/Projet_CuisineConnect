@@ -200,9 +200,22 @@ function updatePreferences(userId, preferences) {
     return axiosInstance.patch(`/users/${userId}/preferences`, preferences, {
       headers: getRequestHeaders(token, true),
     });
-  }
-
+}
+function getUserFavorites(userId) {
+  return apiClient.get(`/users/${userId}/favorites`, token)
+    .then(response => response.data) 
+    .catch(error => {
+      console.error("Erreur lors de la récupération des favoris de l'utilisateur", error);
+      return [];
+    });
+}
+  
  
+
+  function removeFavorite(userId, recetteId) {
+  return apiClient.delete(`/users/${userId}/favorites/${recetteId}`, token);
+}
+
   return {
     login,
     getLoggedInUser,
@@ -232,5 +245,7 @@ function updatePreferences(userId, preferences) {
     getPreferences,
     getNotesByRecetteId,
     getSimilarRecipes,
+    getUserFavorites,
+    removeFavorite,
   };
 }

@@ -50,7 +50,6 @@ const StyledTabList = styled(TabList)(({ theme }) => ({
 const StyledTabPanel = styled(TabPanel)(() => ({
   padding: 0,
 }));
-
 const UserProfile: FC = () => {
   useTitle("Mon Profil");
   const { user } = useAuth();
