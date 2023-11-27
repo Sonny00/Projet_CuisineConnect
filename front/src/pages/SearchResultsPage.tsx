@@ -8,6 +8,21 @@ const SearchResultsPage = () => {
   const { recettes } = location.state || {};
 
   
+  console.log("Recettes reçues :", recettes);
+
+  const ids = new Set();
+  const recettesSansDoublons = recettes.filter(recette => {
+    if (ids.has(recette.id)) {
+      return false;
+    } else {
+      ids.add(recette.id);
+      return true;
+    }
+  });
+
+  console.log("Recettes après élimination des doublons :", recettesSansDoublons);
+
+  
   const uniqueRecettes = Array.from(new Map(recettes.map(recette => [recette.id, recette])).values());
 
   const handleNavigate = (recetteId) => {

@@ -285,7 +285,9 @@ async function resetDB() {
   }
 
   await prisma.user.deleteMany({});
-
+  await prisma.commentaire.deleteMany({});
+  await prisma.recette.deleteMany({});
+  await prisma.user.deleteMany({});
   // console.log('database reset');
 }
 
@@ -306,3 +308,4 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+
