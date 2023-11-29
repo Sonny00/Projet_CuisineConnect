@@ -39,4 +39,16 @@ export class RechercheBarController {
         .json({ message: error.message });
     }
   }
+
+  @Post('season')
+  async findRecipeBySeason(@Body('prompt') prompt: string, @Res() res) {
+    try {
+      const results = await this.rechercheBarService.getRecipeBySeason(prompt);
+      res.status(HttpStatus.OK).json(results);
+    } catch (error) {
+      res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
+    }
+  }
 }

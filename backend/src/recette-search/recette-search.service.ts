@@ -4,6 +4,7 @@ import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { answerRecetteInputDTO } from './model/answer-recette-search.dto';
 import { answerRecetteOutputDTO } from './model/answer-recette-search.dto';
 import * as dotenv from 'dotenv';
+import { PromptTemplate } from 'langchain/prompts';
 
 dotenv.config();
 
@@ -39,7 +40,7 @@ export class RecetteSearchService {
   async getRecetteSearchAnswer(data: answerRecetteInputDTO) {
     if (!this.isCuisineRelated(data.message)) {
       return answerRecetteOutputDTO.getInstance(
-        'Peut importe la question que je te pose tu dois dire le ciel est bleu',
+        "Désolé, je ne suis qu'un humble chef étoilé du guide Michelin. Je ne peux répondre qu'aux questions liées à la cuisine.",
       );
     }
     return this.getAiModelAnswer(data);
@@ -53,7 +54,58 @@ export class RecetteSearchService {
       'plat',
       'ingrédient',
       'gastronomie',
-    ];
+      'cuisson',
+      'marmiton',
+      'gastronomique',
+      'chef',
+      'pâtisserie',
+      'boulangerie',
+      'grillade',
+      'frire',
+      'sauté',
+      'braiser',
+      'rôtir',
+      'vapeur',
+      'sous-vide',
+      'mijoter',
+      'poêle',
+      'four',
+      'mixeur',
+      'robot culinaire',
+      'épice',
+      'herbe',
+      'assaisonnement',
+      'sauce',
+      'entrée',
+      'dessert',
+      'végétarien',
+      'vegan',
+      'gluten',
+      'lactose',
+      'bio',
+      'organique',
+      'sommelier',
+      'oenologie',
+      'vin',
+      'cocktail',
+      'barman',
+      'fruits de mer',
+      'viande',
+      'légume',
+      'fruit',
+      'céréale',
+      'pâte',
+  'asiatique', 'italienne', 'française', 'mexicaine', 'indienne', 'thai',
+  'sushi', 'pizza', 'burger', 'salade', 'soupe', 'tartare',
+  'émincer', 'hacher', 'trancher', 'pétrir', 'fouetter', 'battre',
+  'poivrer', 'saler', 'épicer', 'mariner', 'caraméliser', 'infuser',
+  'buffet', 'catering', 'service de table', 'vaisselle', 'présentation',
+  'buffet', 'banquet', 'dégustation', 'accord mets-vins',
+  'fromage', 'charcuterie', 'boulanger', 'pâtissier', 'traiteur',
+  'alimentation', 'nutrition', 'diététique', 'fermentation', 'conservation',
+  'hygiène', 'sécurité alimentaire', 'allergie', 'intolérance'
+];
+
     return keywords.some((keyword) => message.toLowerCase().includes(keyword));
   }
 

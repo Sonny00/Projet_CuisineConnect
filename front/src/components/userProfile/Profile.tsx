@@ -41,9 +41,6 @@ useEffect(() => {
   fetchData();
 }, [api, user?.id]);
 
-
-
-
   return (
     <Grid container spacing={3}>
       <Grid item md={12} xs={12}>

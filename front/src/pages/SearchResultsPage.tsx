@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography, Container, Button } from "@mui/material";
 
-const SearchResultsPage = () => {
+  const SearchResultsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { recettes } = location.state || {};

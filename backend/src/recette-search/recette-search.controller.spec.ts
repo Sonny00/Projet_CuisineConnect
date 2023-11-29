@@ -12,7 +12,7 @@ describe('RecetteSearchController', () => {
     controller = module.get<RecetteSearchController>(RecetteSearchController);
   });
 
-  it('should be defined', () => {
+  it('ça doit être défini', () => {
     expect(controller).toBeDefined();
   });
 });

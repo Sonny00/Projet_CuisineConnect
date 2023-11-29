@@ -12,8 +12,6 @@ import useApi from "../hooks/useApi";
 import toast from "react-hot-toast";
 import PreferencesModal from "../components/Preferences";
 
-
-// styled components
 const StyledCard = styled(Card)(() => ({
   position: "relative",
   borderTopLeftRadius: 0,
@@ -57,15 +55,14 @@ const UserProfile: FC = () => {
   const api = useApi();
   const [isPreferencesModalOpen, setIsPreferencesModalOpen] = useState(false);
 
-   const handleChange = (_: SyntheticEvent, newValue: string) => {
+  const handleChange = (_: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
-
-    const handlePreferencesSave = (preferences) => {
+  const handlePreferencesSave = (preferences) => {
     console.log("Préférences enregistrées:", preferences);
   };
- 
+
   return (
     <Box pt={2} pb={4}>
       <TabContext value={value}>
@@ -104,7 +101,7 @@ const UserProfile: FC = () => {
             </ContentWrapper>
 
             <StyledTabList onChange={handleChange}>
-              <StyledTab label="Mon profil" value="1" /> 
+              <StyledTab label="Mon profil" value="1" />
               <StyledTab label="Mes préférences alimentaire" value="2" />
               <StyledTab label="                " value="3" />
               <StyledTab label="                " value="4" />
@@ -116,41 +113,35 @@ const UserProfile: FC = () => {
           <StyledTabPanel value="1">
             <Profile />
           </StyledTabPanel>
-            <StyledTabPanel value="2">
+          <StyledTabPanel value="2">
             <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-            
-              </Grid>
-            
-    <Grid container spacing={3}>
-    <Grid item xs={12} md={12}>
-      <Box 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
-        style={{ height: '100%' }}
-      >
-        <Button 
-          variant="contained" 
-          onClick={() => setIsPreferencesModalOpen(true)}
-          style={{ backgroundColor: "black", color: "white" }}
-        >
-          Gérer les préférences alimentaires
-        </Button>
-      </Box>
+              <Grid item xs={12} md={12}></Grid>
 
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={12}>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ height: "100%" }}
+                  >
+                    <Button
+                      variant="contained"
+                      onClick={() => setIsPreferencesModalOpen(true)}
+                      style={{ backgroundColor: "black", color: "white" }}
+                    >
+                      Gérer les préférences alimentaires
+                    </Button>
+                  </Box>
 
+                  <PreferencesModal
+                    isOpen={isPreferencesModalOpen}
+                    onClose={() => setIsPreferencesModalOpen(false)}
+                    onSave={handlePreferencesSave}
+                  />
+                </Grid>
 
-               <PreferencesModal
-          isOpen={isPreferencesModalOpen}
-          onClose={() => setIsPreferencesModalOpen(false)}
-          onSave={handlePreferencesSave}
-        />
-              </Grid>
-              
-              <Grid item xs={12}>
-               
-              </Grid>
+                <Grid item xs={12}></Grid>
               </Grid>
             </Grid>
           </StyledTabPanel>
