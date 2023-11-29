@@ -27,145 +27,130 @@ export class RechercheBarService {
       ],
     },
     {
-    "title": "Salade César",
-    "ingredients": [
-      "Laitue romaine",
-      "Croûtons",
-      "Parmesan râpé",
-      "Poulet grillé (facultatif)",
-      "Sauce César"
-    ]
-  },
-  {
-    "title": "Ratatouille",
-    "ingredients": [
-      "Aubergine",
-      "Courgette",
-      "Poivron",
-      "Oignon",
-      "Tomates",
-      "Ail",
-      "Herbes de Provence"
-    ]
-  },
-  {
-    "title": "Tarte aux pommes",
-    "ingredients": [
-      "Pâte brisée",
-      "Pommes",
-      "Sucre",
-      "Cannelle",
-      "Beurre"
-    ]
-  },
-  {
-    "title": "Sushi au Saumon",
-    "ingredients": [
-      "Riz à sushi",
-      "Saumon",
-      "Feuilles de nori",
-      "Wasabi",
-      "Sauce soja"
-    ]
-  },
-  {
-    "title": "Curry de Poulet",
-    "ingredients": [
-      "Blancs de poulet",
-      "Oignon",
-      "Curry en poudre",
-      "Lait de coco",
-      "Légumes de votre choix",
-      "Riz basmati"
-    ]
-  },
-  {
-    "title": "Salade de Quinoa",
-    "ingredients": [
-      "Quinoa",
-      "Concombres",
-      "Tomates",
-      "Poivrons",
-      "Oignons rouges",
-      "Huile d'olive",
-      "Jus de citron",
-      "Sel et poivre"
-    ]
-  },
-  {
-    "title": "Tacos au Bœuf",
-    "ingredients": [
-      "Bœuf haché",
-      "Épices mexicaines",
-      "Tomates",
-      "Laitue",
-      "Crème sure",
-      "Fromage râpé",
-      "Tortillas de maïs"
-    ]
-  },
-  {
-    "title": "Gâteau au chocolat",
-    "ingredients": [
-      "Farine",
-      "Cacao en poudre",
-      "Sucre",
-      "Levure chimique",
-      "Sel",
-      "Beurre fondu",
-      "Œufs"
-    ]
-  },
-  {
-    "title": "Tiramisu",
-    "ingredients": [
-      "Mascarpone",
-      "Sucre",
-      "Œufs",
-      "Biscuits",
-      "Café",
-      "Cacao en poudre"
-    ]
-  },
-  {
-    "title": "Tarte aux fraises",
-    "ingredients": [
-      "Biscuits Graham",
-      "Beurre fondu",
-      "Garniture aux fraises"
-    ]
-  },
-  {
-    "title": "Salade de fruits",
-    "ingredients": [
-      "Fraises",
-      "Bananes",
-      "Oranges",
-      "Pommes",
-      "Jus de citron",
-      "Sucre"
-    ]
-  },
-  {
-    "title": "Salade de pommes de terre",
-    "ingredients": [
-      "Pommes de terre",
-      "Oignons",
-      "Mayonnaise",
-      "Moutarde"
-    ]
-  },
-  {
-    "title": "Salade de pâtes",
-    "ingredients": [
-      "Pâtes",
-      "Tomates",
-      "Concombres",
-      "Olives",
-      "Huile d’olive",
-      "Vinaigre balsamique",
-      "Sel et poivre"
-    ]
+      title: 'Salade César',
+      ingredients: [
+        'Laitue romaine',
+        'Croûtons',
+        'Parmesan râpé',
+        'Poulet grillé (facultatif)',
+        'Sauce César',
+      ],
+    },
+    {
+      title: 'Ratatouille',
+      ingredients: [
+        'Aubergine',
+        'Courgette',
+        'Poivron',
+        'Oignon',
+        'Tomates',
+        'Ail',
+        'Herbes de Provence',
+      ],
+    },
+    {
+      title: 'Tarte aux pommes',
+      ingredients: ['Pâte brisée', 'Pommes', 'Sucre', 'Cannelle', 'Beurre'],
+    },
+    {
+      title: 'Sushi au Saumon',
+      ingredients: [
+        'Riz à sushi',
+        'Saumon',
+        'Feuilles de nori',
+        'Wasabi',
+        'Sauce soja',
+      ],
+    },
+    {
+      title: 'Curry de Poulet',
+      ingredients: [
+        'Blancs de poulet',
+        'Oignon',
+        'Curry en poudre',
+        'Lait de coco',
+        'Légumes de votre choix',
+        'Riz basmati',
+      ],
+    },
+    {
+      title: 'Salade de Quinoa',
+      ingredients: [
+        'Quinoa',
+        'Concombres',
+        'Tomates',
+        'Poivrons',
+        'Oignons rouges',
+        "Huile d'olive",
+        'Jus de citron',
+        'Sel et poivre',
+      ],
+    },
+    {
+      title: 'Tacos au Bœuf',
+      ingredients: [
+        'Bœuf haché',
+        'Épices mexicaines',
+        'Tomates',
+        'Laitue',
+        'Crème sure',
+        'Fromage râpé',
+        'Tortillas de maïs',
+      ],
+    },
+    {
+      title: 'Gâteau au chocolat',
+      ingredients: [
+        'Farine',
+        'Cacao en poudre',
+        'Sucre',
+        'Levure chimique',
+        'Sel',
+        'Beurre fondu',
+        'Œufs',
+      ],
+    },
+    {
+      title: 'Tiramisu',
+      ingredients: [
+        'Mascarpone',
+        'Sucre',
+        'Œufs',
+        'Biscuits',
+        'Café',
+        'Cacao en poudre',
+      ],
+    },
+    {
+      title: 'Tarte aux fraises',
+      ingredients: ['Biscuits Graham', 'Beurre fondu', 'Garniture aux fraises'],
+    },
+    {
+      title: 'Salade de fruits',
+      ingredients: [
+        'Fraises',
+        'Bananes',
+        'Oranges',
+        'Pommes',
+        'Jus de citron',
+        'Sucre',
+      ],
+    },
+    {
+      title: 'Salade de pommes de terre',
+      ingredients: ['Pommes de terre', 'Oignons', 'Mayonnaise', 'Moutarde'],
+    },
+    {
+      title: 'Salade de pâtes',
+      ingredients: [
+        'Pâtes',
+        'Tomates',
+        'Concombres',
+        'Olives',
+        'Huile d’olive',
+        'Vinaigre balsamique',
+        'Sel et poivre',
+      ],
     },
   ];
 
@@ -173,7 +158,6 @@ export class RechercheBarService {
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
-
   }
 
   private formatRecettes() {
@@ -199,6 +183,7 @@ export class RechercheBarService {
       const generatedMessage = response.choices[0].message.content;
       // eslint-disable-next-line
       console.log('Contenu du message généré :', generatedMessage);
+      // eslint-disable-next-line
       console.log('wtf', formattedRecettes);
       if (!response.choices) {
         throw new Error("La réponse de l'API OpenAI ne contient pas de choix.");

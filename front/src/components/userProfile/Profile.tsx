@@ -10,7 +10,7 @@ import PostCard from "./PostCard";
 import useAuth from "../../hooks/useAuth";
 import useApi from "../../hooks/useApi";
 import { useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -18,6 +18,8 @@ const Profile: FC = () => {
   const { user } = useAuth();
   const [favorites, setFavorites] = useState([]); 
   const [preferences, setPreferences] = useState("");
+   const navigate = useNavigate();
+
   
   const api = useApi();
 
@@ -40,6 +42,10 @@ useEffect(() => {
 
   fetchData();
 }, [api, user?.id]);
+  
+  const handleNavigate = (recetteId) => {
+    navigate(`/recette/${recetteId}`);
+  };
 
   return (
     <Grid container spacing={3}>
@@ -51,9 +57,7 @@ useEffect(() => {
             <Grid container spacing={2}>
               {favorites.map((fav, index) => (
                 <Grid item key={index} xs={12} sm={6} md={4}>
-                  <Card>
-                    {/* Ici, vous pouvez ajouter le contenu de la carte, 
-                        comme le titre et la description de la recette */}
+                  <Card onClick={() => handleNavigate(fav.id)}>
                     <Box padding={2}>
                       <H6>{fav.title}</H6>
                     </Box>
