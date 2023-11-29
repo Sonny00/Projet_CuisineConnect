@@ -10,7 +10,7 @@ export class RecetteSearchController {
   async getChatCompletionMessage(
     @Body(new ValidationPipe({ transform: true })) data: answerRecetteInputDTO,
   ) {
-    const response = await this.service.getAiModelAnswer(data);
+    const response = await this.service.getRecetteSearchAnswer(data);
     return response;
   }
 }

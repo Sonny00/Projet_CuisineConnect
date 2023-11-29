@@ -114,3 +114,39 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* Chatbot.css */
+.chatbot-message {
+  /* Styles pour les messages du bot */
+  background-color: #90caf9;
+  /* ... autres styles ... */
+}
+
+.user-message {
+  /* Styles pour les messages de l'utilisateur */
+  background-color: #e0e0e0;
+  /* ... autres styles ... */
+}
+
+.loader {
+  display: inline-block;
+}
+
+.loader-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: black;
+  margin: 0 2px;
+  animation: loaderAnimation 1.4s infinite ease-in-out both;
+}
+
+.loader-dot:nth-child(1) { animation-delay: -0.32s; }
+.loader-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loaderAnimation {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+}
+

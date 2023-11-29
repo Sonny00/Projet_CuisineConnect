@@ -40,7 +40,7 @@ export class RecetteSearchService {
   async getRecetteSearchAnswer(data: answerRecetteInputDTO) {
     if (!this.isCuisineRelated(data.message)) {
       return answerRecetteOutputDTO.getInstance(
-        "Désolé, je ne suis qu'un humble chef étoilé du guide Michelin. Je ne peux répondre qu'aux questions liées à la cuisine.",
+        "Désolé, je ne suis qu'un humble chef étoilé du guide Michelin. Je ne peux répondre qu'aux questions liées à la cuisine."
       );
     }
     return this.getAiModelAnswer(data);

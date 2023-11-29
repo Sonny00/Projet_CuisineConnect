@@ -56,6 +56,8 @@ const Hero: React.FC = () => {
     }
   };
 
+  
+
   return (
     <>
       <div

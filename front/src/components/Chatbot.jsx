@@ -4,9 +4,12 @@ import useApi from '../hooks/useApi';
 
 function Chatbot() {
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([]);
+  //const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isChatbotVisible, setIsChatbotVisible] = useState(true);
+  const [messages, setMessages] = useState([
+  { text: "Bonjour je suis Coco le Cuisto un humble chef étoilé du guide Michelin qui répondra à toutes vos questions sur la cuisine, que puis-je faire pour vous ?", sender: 'chatbot' }
+]);
 
   const api = useApi();
 
@@ -48,16 +51,16 @@ function Chatbot() {
       </div>
       <div id="chatbot">
         <div id="conversation">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`chatbot-message ${message.sender}-message`}
-            >
-              <p className="chatbot-text">
-                {message.text}
-              </p>
-            </div>
-          ))}
+     {messages.map((message, index) => (
+  <div
+    key={index}
+    className={`chatbot-message ${message.sender === 'user' ? 'user-message' : ''}`}
+  >
+    <p className="chatbot-text">
+      {message.text}
+    </p>
+  </div>
+))}
         </div>
         <form id="input-form" onSubmit={handleSubmit}>
           <div className="message-container">
@@ -68,9 +71,13 @@ function Chatbot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <div className="loader-container">
-              {loading && <div className="loader"></div>}
-            </div>
+           {loading && (
+  <div className="loader">
+    <div className="loader-dot"></div>
+    <div className="loader-dot"></div>
+    <div className="loader-dot"></div>
+  </div>
+)}
             <button id="submit-button" type="submit" disabled={loading}>
               <img className="send-icon" src="send-message.png" alt="" />
             </button>
