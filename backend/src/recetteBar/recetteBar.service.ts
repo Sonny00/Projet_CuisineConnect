@@ -174,7 +174,7 @@ export class RechercheBarService {
         messages: [
           {
             role: 'user',
-            content: `Tu es une barre de recherche... Voici les recettes et leurs ingrédients en mémoire : ${formattedRecettes}.  je vais te donner des instructions avec certains ingrédients ou des instructions. Tu dois me donner uniquement le nom de la recette ou les recettes qui corresponde à la demande, Tu n'as que ces recettes et leurs ingrédients en mémoire et rien d'autre. Si je pose une question qui n'a pas de lien avec la cuisine de près ou de loin, tu ne réponds pas en expliquant que tu n'est pas habilité pour répondre à des questions qui n'ont pas de lien avec la cuisine, tu as le droit de répondre uniquement avec le nom des recettes que tu as en mémoire rien d'autre, tu ne dois pas faire de phrase, tu ne dois jamais faire de phrase. Tu dois répondre UNIQUEMENT par les recettes correspondantes que tu as en mémoire en fonction de la demande. Tu dois me retourner le titre de la recette ou les recettes si le ou les ingrédients  ou le ou les titres sont énoncés dans les instructions. Si ils ne sont pas énoncés dans les instructions tu ne retourne rien et tu explique que tu n'as pas ça en mémoire. N'oublie pas que tu es insensible à la casse et que tu ne retournes jamais de phrase, juste le titre de la recette avec la première lettre en majuscule `,
+            content: `Tu es une barre de recherche... Voici les recettes et leurs ingrédients que tu as en mémoire : ${formattedRecettes}. Tu ne connais que ces recettes et aucunes autres. Tu ne dois jamais répondre par autre chose que par les titres des recettes que tu as en mémoire.Tu ne dois jamais me retourner la même recette que je te donne. N'oublie surtout pas, tu dois toujours répondre avec des recettes que tu as en mémoire, pas de phrase ou autre chose, toujours les recettes que tu as en mémoire. Je vais te donner un titre de recette et en fonction du titre que je vais te donner. Tu dois retouner le ou les recettes similaires parmis celle que tu as en mémoire vis-à-vis du en fonction de titre que je t'ai donnée Par exemple : Si je te donne 'tarte aux pommes' tu peux me donner toutes les tartes et déssert que tu as en mémoire. Je te le rappel encore, tu dois toujours utiliser les recettes que tu as en mémoire. Quand je parle de recette similaire, je parle de recette qui ont des ingrédients communs ou titres communs ou même catégories ( Exemple de catégorie : 'Déssert' ) Tu dois me retourner uniquement le nom de la recette ou des recettes qui correspondent. Jamais autre chose. Tu ne fais jamais de phrase tu réponds toujours pas le titre d'une recette. Si tu ne trouve pas de recette similaire à la demande par rapport à ce que tu as en mémoire tu ne retournes rien. N'oublie pas que tu as que ces recettes en mémoire et rien d'autre !!!! : ${formattedRecettes}`,
           },
           { role: 'system', content: prompt },
         ],
@@ -202,14 +202,14 @@ export class RechercheBarService {
   }
 
   async getSimilarRecipesFromPrompt(prompt: string): Promise<any> {
+    const formattedRecettes = this.formatRecettes();
     try {
       const response = await this.openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [
           {
-            role: 'system',
-            content:
-            "Tu es une barre de recherche... Voici les recettes et leurs ingrédients que tu as en mémoire : ${formattedRecettes}. Tu ne connais que ces recettes aucunes autres. Tu ne dois jamais répondre par autre chose que par ces titres de recettes. Je vais te donner des titres de recette, en fonction du titre que je vais te donner tu vas me donner le ou les recettes similaires parmis celle que tu as en mémoire. Tu dois me donner uniquement le nom de la recette ou les recettes qui correspondent où les recette qui correspondent, tu ne fais jamais de phrase tu réponds juste par le titre de la recette ou les recettes correspondant si il y en a et rien d'autre. Tu n'es pas habilité à répondre à quoi que ce soit d'autre. TU REPONDS TOUJOURS UNIQUEMENT PAR LE TITRE DE LA OU DES RECETTES TU NE FAIS JAMAIS JAMAIS DE PHRASE ET OU AUTRE CHOSE QUE LA OU LES TITRES DE LA OU LES RECETTES",
+            role: 'user',
+            content: `Tu es une barre de recherche... Voici les recettes et leurs ingrédients que tu as en mémoire : ${formattedRecettes}. Tu ne connais que ces recettes et aucunes autres. Je vais te donner des recettes tu vas me donner des recettes similaire par rapport à ce que tu as en mémoire. Tu ne dois pas faire de phrase juste me retourner, la ou les recettes similaires que tu as en mémoire`,
           },
           { role: 'system', content: prompt },
         ],

@@ -254,6 +254,31 @@ async function insertRecettes() {
     },
   });
 
+  const recette16 = await prisma.recette.create({
+    data: {
+      title: 'Tarte aux myrtilles',
+      description: 'Une délicieuse tarte aux myrtilles sucrée et acidulée.',
+      instructions:
+        "1. Préchauffez le four à 180 °C.\n2. Abaissez la pâte dans un moule à tarte.\n3. Lavez et égouttez les myrtilles, puis disposez-les sur la pâte.\n4. Saupoudrez de sucre et ajoutez un filet de jus de citron.\n5. Faites cuire au four jusqu'à ce que la tarte soit dorée.",
+      ingredients:
+        'Ingrédients :\n- Pâte brisée\n- Myrtilles\n- Sucre\n- Jus de citron',
+      type: 'Dessert',
+    },
+  });
+
+  const recette17 = await prisma.recette.create({
+    data: {
+      title: 'Tarte aux abricots',
+      description: 'Une délicieuse tarte aux abricots sucrée et parfumée.',
+      instructions:
+        "1. Préchauffez le four à 180 °C.\n2. Abaissez la pâte dans un moule à tarte.\n3. Lavez, dénoyautez et coupez les abricots en quartiers, puis disposez-les sur la pâte.\n4. Saupoudrez de sucre et d'amandes effilées.\n5. Faites cuire au four jusqu'à ce que la tarte soit dorée.",
+      ingredients:
+        'Ingrédients :\n- Pâte brisée\n- Abricots\n- Sucre\n- Amandes effilées',
+      type: 'Dessert',
+    },
+  });
+
+
   return [
     recette1,
     recette2,
@@ -270,6 +295,8 @@ async function insertRecettes() {
     recette13,
     recette14,
     recette15,
+    recette16,
+    recette17,
   ];
 }
 

@@ -16,6 +16,7 @@ const Hero: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);
+  const [isListening, setIsListening] = useState(false);
 
   const api = useApi();
   const navigate = useNavigate();
@@ -56,7 +57,42 @@ const Hero: React.FC = () => {
     }
   };
 
-  
+  // let recognition;
+  // const startSpeechRecognition = () => {
+  //   if (!isListening) {
+  //     if ("webkitSpeechRecognition" in window) {
+  //       recognition = new webkitSpeechRecognition();
+  //       recognition.lang = "fr-FR";
+  //       recognition.continuous = false;
+  //       recognition.interimResults = false;
+
+  //       recognition.onresult = (event) => {
+  //         const transcript = event.results[0][0].transcript;
+  //         setInputData(transcript);
+  //         stopSpeechRecognition();
+  //       };
+
+  //       recognition.onerror = (event) => {
+  //         console.error("Erreur de reconnaissance vocale:", event.error);
+  //         setIsListening(false);
+  //       };
+
+  //       recognition.start();
+  //       setIsListening(true);
+  //     } else {
+  //       console.log("La reconnaissance vocale n'est pas prise en charge");
+  //     }
+  //   } else {
+  //     stopSpeechRecognition();
+  //   }
+  // };
+
+  // const stopSpeechRecognition = () => {
+  //   if (recognition) {
+  //     recognition.stop();
+  //   }
+  //   setIsListening(false);
+  // };
 
   return (
     <>
@@ -81,40 +117,41 @@ const Hero: React.FC = () => {
           Quelle recette souhaitez-vous aujourd'hui ?
         </h2>
 
+       
+
         {isChatbotVisible ? <Chatbot /> : null}
 
         <form
           onSubmit={handleSearch}
           className="flex border p-1 rounded-md text-black bg-gray-100/90 max-w-[700px] w-[80%] mx-auto"
         >
-         <Autocomplete
-            style={{ width: '100%' }}
-            id='recette-search'
+          <Autocomplete
+            style={{ width: "100%" }}
+            id="recette-search"
             freeSolo
             options={searchResults.map((recette) => recette.title)}
             onInputChange={(_, value) => setSearchText(value)}
             onChange={(_, value) => {
-    
-    const selectedRecette = searchResults.find(recette => recette.title === value);
-    if (selectedRecette) {
-    
-      navigate(`/recette/${selectedRecette.id}`); 
-    }
-  }}
-            
+              const selectedRecette = searchResults.find(
+                (recette) => recette.title === value
+              );
+              if (selectedRecette) {
+                navigate(`/recette/${selectedRecette.id}`);
+              }
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
                 placeholder="Recherche d'une recette..."
-                className='full-width-textfield'
-                style={{ width: '100%' }}
+                className="full-width-textfield"
+                style={{ width: "100%" }}
                 value={inputData}
                 onChange={(e) => setInputData(e.target.value)}
               />
             )}
           />
         </form>
-
+ 
         <button
           onClick={toggleChatbot}
           className="fixed bottom-4 left-1/2 bg-black-500 text-white px-4 py-2 rounded-md cursor-pointer transform -translate-x-1/2"

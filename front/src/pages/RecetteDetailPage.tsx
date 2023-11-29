@@ -45,16 +45,9 @@ function RecetteDetailPage() {
             api.getRecette(title),
             api.getCommentaires(title),
             api.getNotesByRecetteId(title),
-          
-
-          
-
-            //api.getSimilarRecipes(title)
-            // api.getFavoriteRecettes() // Assurez-vous que cette fonction existe et fonctionne correctement
           ]);
 
         if (mounted) {
-          //const response = await api.getSimilarRecipes(title);
           setRecette(recetteResponse.data);
           setCommentaires(commentairesResponse.data);
           setFavorite(recetteResponse.data.favorite);
@@ -82,22 +75,22 @@ function RecetteDetailPage() {
   }, [title, api]);
 
   useEffect(() => {
-  // Charger les détails de la recette
+  
   const loadRecetteDetails = async () => {
     try {
       const recetteResponse = await api.getRecette(title);
       setRecette(recetteResponse.data);
-      // autres états à définir
+   
     } catch (error) {
       console.error("Erreur lors de la récupération des détails de la recette", error);
     }
   };
 
   loadRecetteDetails();
-}, [title, api]); // Dépendances : title et api
+}, [title, api]); 
 
 useEffect(() => {
-  // Vérifier si la recette est dans les favoris
+  
   const checkIfFavorite = async () => {
     try {
       const userId = user?.id;
@@ -114,30 +107,7 @@ useEffect(() => {
   if (recette) {
     checkIfFavorite();
   }
-}, [user, recette]); // Dépendances : user et recette
-
-
-  // useEffect(() => {
-  //   let intervalId;
-
-  //   const fetchCommentaires = () => {
-  //     if (recette) {
-  //       api.getCommentaires(recette.id)
-  //         .then((response) => {
-  //           setCommentaires(response.data);
-  //         })
-  //         .catch((error) => {
-  //           console.error("Erreur lors de la récupération des commentaires", error);
-  //         });
-  //     }
-  //   };
-
-  //   fetchCommentaires();
-  //   intervalId = setInterval(fetchCommentaires, 10000);
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [recette, api]);
+}, [user, recette]); 
 
   const handleAddComment = () => {
     api
@@ -167,8 +137,8 @@ useEffect(() => {
 
  const handleToggleFavorite = async () => {
   try {
-    const userId = user?.id; // Assurez-vous que l'ID de l'utilisateur est correctement récupéré
-    const recetteId = recette?.id; // Assurez-vous que l'ID de la recette est correctement récupéré
+    const userId = user?.id; 
+    const recetteId = recette?.id;
 
     if (!userId || !recetteId) {
       console.error("ID utilisateur ou recette manquant");
@@ -176,15 +146,14 @@ useEffect(() => {
     }
 
     if (favorite) {
-      await api.removeFavorite(userId, recetteId); // Utilisation de la nouvelle signature de fonction
+      await api.removeFavorite(userId, recetteId);
       setFavorite(false);
     } else {
-      await api.addFavorite(recetteId); // Assurez-vous que cette méthode est également correcte
+      await api.addFavorite(recetteId); 
       setFavorite(true);
     }
 
-    // Recharger les données de la recette pourrait ne pas être nécessaire si vous mettez à jour l'état localement
-    // fetchData(); 
+
 
   } catch (error) {
     console.error("Erreur lors de la mise à jour des favoris", error);
@@ -195,9 +164,9 @@ useEffect(() => {
   
   const handleFindSimilarRecipes = async () => {
   try {
-    const response = await api.getSimilarRecipes(recette.title); // Remplacez 'title' par le titre de la recette actuelle
+    const response = await api.getSimilarRecipes(recette.title);
     
-    setRecetteSimilaires(response.data); // Met à jour l'état avec les recettes similaires
+    setRecetteSimilaires(response.data); 
   } catch (error) {
     console.error("Erreur lors de la récupération des recettes similaires", error);
     console.log(typeof recette.title);

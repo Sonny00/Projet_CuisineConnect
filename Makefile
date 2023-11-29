@@ -31,7 +31,7 @@ prisma-db:
 prisma-seed:
 	docker-compose exec -it nestjs npx prisma db seed
 
-# commandes Front
+
 front-install:
 	docker-compose exec react npm install
 front-start:
