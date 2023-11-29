@@ -23,7 +23,7 @@ cd backend
 touch .env # Créer un fichier .env dans le dossier backend et renseignez votre clé api OpenAI
 OPENAI_API_KEY="Votre clé API"
 
-cd backend
+cd front
 touch .env # Créer un fichier .env dans le dossier front et renseignez votre clé api OpenAI
 OPENAI_API_KEY="Votre clé API"
 
